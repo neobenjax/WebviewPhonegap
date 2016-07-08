@@ -37,32 +37,66 @@
     * Create your own at http://cspisawesome.com
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>pollo World</title>
+    <link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox.css" id="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css" id="stylesheet"/>
+    <title>Ferrepat APP</title>
 </head>
 
 <body>
-    <div class="app">
-        <h1>pollo PhoneGap</h1>
-        <div id="deviceready" class="blink" style="display:none;">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
-            <br>
-            <a href="#mainPage" target="_self" onclick="window.open('https://www.ferrepat.com', '_self ', 'location=no');">
-                Abrir Sitio Window Open
-            </a>
-            <br><br>
-            <a href="https://www.ferrepat.com">
-                Abrir HREF
-            </a>
+    <div id="splahscren"></div>
+    <div id="mainContainer">
+        <div id="login">
+            <div id="headerApp" class="headerApp BG_GRIS">
+                <img src="img/logo_ferrepat.png" alt="Ferrepat" class="logoLogin">
+            </div>
+            <div id="formulario">
+                <h1 class="tituloForm AZUL">Ingresa a tu cuenta</h1>
+                <p class="instruccionLogin">
+                    Inicia sesión para hacer un checkout express con tus datos
+                </p>
+                <form action="login" id="login" method="post">
+                    <ul class="camposForm" id="camposForm">
+                        <li><input type="email" placeholder="E-MAIL" class="inputFull"></li>
+                        <li><input type="password" placeholder="CONTRASEÑA" class="inputFull"></li>
+                        <li class="checkBox">
+                            <div class="recordar">
+                                <input type="checkbox" value="recordar" class="checkRecordar">
+                                <span class="textoRecordar">Recordar mi cuenta</span>
+                            </div>
+                            <a href="#recuperar" class="recuperarPass">¿Olvidaste tu contraseña?</a>
+                        </li>
+                    </ul>
+                    <button id="submitLogin" class="btn BLOCK BG_AZUL_GRAD BLANCO TXT_UPPER">Iniciar Sesión</button>
+                </form>
+            </div>
+            <div class="BG_GRIS registro">
+                Si aún no eres socio,
+                <br>
+                <a href="#" class="GRIS TXT_UPPER"><strong>REGÍSTRATE</strong></a>
+            </div>
+            <div class="omitir">
+                <a href="#" class="GRIS"><strong>Omitir registro</strong></a>
+            </div>
+            <div class="avisoTyC">
+                <a href="#" class="GRIS inlineLink">Aviso de privacidad</a> | <a href="#" class="GRIS inlineLink">Términos y condiciones</a>
+            </div>
+            <div class="footerApp">
+                
+            </div>
         </div>
-        <div id="mainPage">
-            
+        <div id="mainPage" style="display:none;">
+            <div id="header"></div>
+            <div id="contenido">
+                <iframe src="http://localhost:81/ferrepat_git/index.php?app=true" frameborder="0"></iframe>
+            </div>
+            <div id="footerMenu"></div>
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="fancybox/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript">
         app.initialize();
     </script>
