@@ -38,7 +38,7 @@
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
     <link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox.css" id="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="css/index.css" id="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css" id="stylesheetindex"/>
     <title>Ferrepat APP</title>
 </head>
 
@@ -54,13 +54,13 @@
                 <p class="instruccionLogin">
                     Inicia sesión para hacer un checkout express con tus datos
                 </p>
-                <form action="login" id="login" method="post">
+                <form action="login" id="loginForm" method="post">
                     <ul class="camposForm" id="camposForm">
-                        <li><input type="email" placeholder="E-MAIL" class="inputFull"></li>
-                        <li><input type="password" placeholder="CONTRASEÑA" class="inputFull"></li>
+                        <li><input type="email" placeholder="E-MAIL" class="inputFull" name="correo"></li>
+                        <li><input type="password" placeholder="CONTRASEÑA" class="inputFull" name="password"></li>
                         <li class="checkBox">
                             <div class="recordar">
-                                <input type="checkbox" value="recordar" class="checkRecordar">
+                                <input type="checkbox" value="recordar" class="checkRecordar" name="recordarUsuario">
                                 <span class="textoRecordar">Recordar mi cuenta</span>
                             </div>
                             <a href="#recuperar" class="recuperarPass">¿Olvidaste tu contraseña?</a>
@@ -72,24 +72,115 @@
             <div class="BG_GRIS registro">
                 Si aún no eres socio,
                 <br>
-                <a href="#" class="GRIS TXT_UPPER"><strong>REGÍSTRATE</strong></a>
+                <a href="#" class="TXT_UPPER"><strong>REGÍSTRATE</strong></a>
             </div>
             <div class="omitir">
-                <a href="#" class="GRIS"><strong>Omitir registro</strong></a>
+                <a href="#"><strong>Omitir registro</strong></a>
             </div>
             <div class="avisoTyC">
-                <a href="#" class="GRIS inlineLink">Aviso de privacidad</a> | <a href="#" class="GRIS inlineLink">Términos y condiciones</a>
+                <a href="#" class="inlineLink">Aviso de privacidad</a> | <a href="#" class="inlineLink">Términos y condiciones</a>
             </div>
             <div class="footerApp">
                 
             </div>
         </div>
         <div id="mainPage" style="display:none;">
-            <div id="header"></div>
-            <div id="contenido">
-                <iframe src="http://localhost:81/ferrepat_git/index.php?app=true" frameborder="0"></iframe>
+            <div id="header" class="BG_AZUL_GRAD">
+                <div class="toolsHeader">
+                    <a href="#" class="logoInt">
+                        <img src="img/logo_ferrepat_int.png" alt="Ferrepat">
+                    </a>
+                    <a href="#" class="abrirMosaico">
+                        <img src="img/icono_moisaico.png" alt="Categorías">
+                    </a>
+                    <div class="rightTools">
+                        <img src="img/lupa_menu.png" alt="B" class="buscarHeader">
+                        <img src="img/menu_hamburguesa.png" alt="B" class="menuIcon" id="desplegarMenu">
+                    </div>
+                </div>
             </div>
-            <div id="footerMenu"></div>
+            <div id="buscadorDesplegable" class="BG_BLANCO" style="display:none;">
+                <form action="buscar" id="buscador" class="buscarDesplegable">
+                    <button id="buscar"><img src="img/lupa_buscar.png" alt="B" id="submitBuscar"></button>
+                    <input type="text" name="q" placeholder="ENCUENTRA EL PRODUCTO QUE NECESITAS" class="inputBuscador">
+                </form>
+            </div>
+            <div id="contenido">
+                <iframe src="" frameborder="0" id="contenidoSitio" name="contenidoSitio"></iframe>
+            </div>
+            <div id="footerMenu">
+                <ul class="menu">
+                    <li><a href="#"><img src="img/tabicon_home.png" alt="Home" class="icono"></a></li>
+                    <li><a href="#"><img src="img/tabicon_puntosventa.png" alt="Ubicacion" class="icono"></a></li>
+                    <li class="carrito" id="carrito">
+                        <a href="#">
+                            <span class="itemsCarrito BG_AZUL BLANCO" id="itemsCont"><span>3</span></span>
+                            <img src="img/tabicon_carrito.png" alt="Mi Carrito" class="icono">
+                        </a>
+                    </li>
+                    <li><a href="#"><img src="img/tabicon_promos.png" alt="Promos" class="icono"></a></li>
+                    <li><a href="#"><img src="img/tabicon_cuenta.png" alt="Mi Cuenta" class="icono"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="menuApp" class="menuApp BLANCO">
+            <div class="overlay" id="menuOverlay"></div>
+            <div class="menuCont">
+                <form action="buscar" id="buscadorMenu" class="buscadorMenu BG_AZUL_GRAD">
+                    <button id="buscarMenu"><img src="img/lupa_buscar_menu.png" alt="B2" id="submitBuscarMenu"></button>
+                    <input type="text" name="q" placeholder="Buscar" class="inputBuscadorMenu">
+                </form>
+                <div class="contenidoMenu BG_GRIS_2">
+                    <ul class="opcionesMenu">
+                        <li class="BG_AZUL"><a href="#home" class="TXT_UPPER noMosaico">Inicio</a></li>
+                        <li class="BG_AZUL"><a href="http://localhost:81/ferrepat_git/movil/promociones.html" class="TXT_UPPER showMosaico">Promociones</a></li>
+                        <li class="BG_AZUL">
+                            <a href="#" class="TXT_UPPER">Tienda</a>
+                            <ul class="subMenu">
+                                <li><a class="showMosaico" href="http://localhost:81/ferrepat_git/movil/promociones/articulos-para-el-hogar/275/">Artículos para el hogar</a></li>
+                                <li><a class="showMosaico" href="http://localhost:81/ferrepat_git/movil/promociones/material-electrico/285/">Materíal eléctrico</a></li>
+                                <li><a class="showMosaico" href="http://localhost:81/ferrepat_git/movil/promociones/herramientas/286/">Herramientas</a></li>
+                                <li><a class="showMosaico" href="http://localhost:81/ferrepat_git/movil/promociones/ferreteria/287/">Ferretería</a></li>
+                                <li><a class="showMosaico" href="#">Herramientas</a></li>
+                                <li><a class="showMosaico" href="#">Ferretería</a></li>
+                                <li><a class="showMosaico" href="#">Equipo de limpieza</a></li>
+                                <li><a class="showMosaico" href="#">Baños</a></li>
+                                <li><a class="showMosaico" href="#">Maquinaria ligera</a></li>
+                                <li><a class="showMosaico" href="#">Plomería</a></li>
+                                <li><a class="showMosaico" href="#">Láminas</a></li>
+                            </ul>
+                        </li>
+                        <li class="BG_AZUL"><a href="http://localhost:81/ferrepat_git/movil/compra-paso1.html" class="TXT_UPPER noMosaico">Carrito</a></li>
+                        <li class="BG_AZUL"><a href="http://localhost:81/ferrepat_git/movil/login.html" class="TXT_UPPER noMosaico noBorder">Mi cuenta</a></li>
+                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/contacto.html" class="TXT_UPPER noMosaico">Contacto</a></li>
+                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/quienes.html" class="TXT_UPPER noMosaico">Quiénes somos</a></li>
+                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/fq.html" class="TXT_UPPER noMosaico">Preguntas frecuentes</a></li>
+                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/puntos-venta.html" class="TXT_UPPER noMosaico">Puntos de venta</a></li>
+                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/politicas-venta.html" class="TXT_UPPER noMosaico">Políticas de venta</a></li>
+                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/politica-reembolso.html" class="TXT_UPPER noMosaico">Políticas de reembolso</a></li>
+                    </ul>
+                    <ul class="redesMenu">
+                        <li style="display:none;"><a href="whatsapp://send?text=Hello" class="socialLink whatsapp"></a></li>
+                        <li><a href="tel:55555555" class="socialLink tel"></a></li>
+                        <li><a href="#" class="socialLink facebook"></a></li>
+                        <li><a href="#" class="socialLink twitter"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="menuArticulos">
+            <div class="mosaicoMenu">
+                <a href="#"><img src="img/btn_art_hogar.png" alt="Artículos para el hogar"></a>
+                <a href="#"><img src="img/btn_mat_elec.png" alt="Material eléctrico"></a>
+                <a href="#"><img src="img/btn_herramientas.png" alt="Herramientas"></a>
+                <a href="#"><img src="img/btn_ferreteria.png" alt="Ferretería"></a>
+                <a href="#"><img src="img/btn_eq_limp.png" alt="Equipo de limpieza"></a>
+                <a href="#"><img src="img/btn_banhos.png" alt="Baños"></a>
+                <a href="#"><img src="img/btn_maq_ligera.png" alt="Maquinaria ligera"></a>
+                <a href="#"><img src="img/btn_plomeria.png" alt="Plomeria"></a>
+                <a href="#"><img src="img/btn_laminas.png" alt="Laminas"></a>
+                <a href="#"><img src="img/btn_promociones.png" alt="Promociones"></a>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
@@ -100,6 +191,7 @@
     <script type="text/javascript">
         app.initialize();
     </script>
+    <script type="text/javascript" id="injectedJS"></script>
+    <style id="injectedCSS"></style>
 </body>
-
 </html>

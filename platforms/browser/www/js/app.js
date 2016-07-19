@@ -21,6 +21,8 @@
 LOG ERRORS:
 01 - servicio - getVersion ajax retorno diferente de 1 - validar del lado del servicio
 02 - servicio - getVersion no pudo comunicarse con servicio.
+03 - servicio - loginAuth no pudo comunicarse con servicio.
+04 - servicio - getChanges no pudo comunicarse con servicio.
  */
  /*login = {};
  login.user = "test";
@@ -75,6 +77,8 @@ var utiles = {
 };
 var app = {
     version: 0,
+    servicio:'http://localhost:81/ferrepatservice/index.php',
+    urlsitio:'http://localhost:81/ferrepat_git/index.php?app=true',
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -111,6 +115,28 @@ var app = {
         }
     },
     onDeviceReady: function() {
+        var version = JSON.parse(localStorage.getItem('version'));
+
+        if(version==null){
+
+            localStorage.setItem('version', app.version);
+            app.version = JSON.parse(localStorage.getItem('version'));
+
+        } else {
+
+            app.version = version;
+
+        }
+
+        var cssLocal = JSON.parse(localStorage.getItem('cssLocal'));
+        var jsLocal = JSON.parse(localStorage.getItem('jsLocal'));
+
+        if(cssLocal!=null)
+            $('#injectedCSS').html(cssLocal);
+        if(jsLocal!=null)
+            $('#injectedJS').html(jsLocal);
+
+
         internet = app.checkConnection('onDeviceReady');
 
         if (internet.tipo!=0) app.checkForUpdates();
@@ -136,23 +162,21 @@ var app = {
                     });
         //Codigo para validar si hay estilos, js, recursos y demás por inyectar
         $.ajax({
-            url: 'http://localhost:81/ferrepatservice/index.php?act=getVersion',
+            url: app.servicio+'?act=getVersion',
             dataType: 'JSON',
             success: function(data, status) {
                 console.log(data);
                 if(data.codigo==1){
-                    setTimeout(function(){
-                        $.fancybox.close();
-                        var login = JSON.parse(localStorage.getItem('login'));
-                        if(login && login.user!=''){
-                            $('#login').hide();
-                            $('#mainPage').show();
-                        }
-                    },1000);
+                    //validar data.version contra la version local, si es diferente inyectar lo correspondiente
+                    if(app.version != data.version)
+                        setTimeout(function(){$.fancybox.close();app.actualizarApp();},1000);
+                    else
+                        setTimeout(function(){$.fancybox.close();app.loginAMain();},1000);
+
                 } else {
                     utiles.alerta({
                                     titulo:'Error',
-                                    mensaje:'Ocurrio un error, favor de volver a intentar (01)<br>'+data.codigo,
+                                    mensaje:'Ocurrió un error, favor de volver a intentar (01)<br>'+data.codigo,
                                     btnOk:"Ok"
                                 });
                 }
@@ -162,14 +186,130 @@ var app = {
                 //handle the error
                 utiles.alerta({
                                 titulo:'Error',
-                                mensaje:'Ocurrio un error en la comunicación, favor de volver a intentar (02)<br>'+data.codigo,
+                                mensaje:'Ocurrió un error en la comunicación, favor de volver a intentar (02)',
                                 btnOk:"Ok"
                             });
             }
         });
     },
+    actualizarApp: function(){
+        utiles.alerta({
+                    titulo:'Actualizando',
+                    mensaje:'Actualizando contenido',
+                    btnOk:false,
+                    preload:true
+                    });
+        //Codigo para validar si hay estilos, js, recursos y demás por inyectar
+        $.ajax({
+            url: app.servicio+'?act=getChanges',
+            dataType: 'JSON',
+            success: function(data, status) {
+                if(data.codigo==1){
+                    console.log(data);
+                    if(data.css){
+                        $('#injectedCSS').html(data.css);
+                        localStorage.setItem('cssLocal', JSON.stringify(data.css));
+                    }
+                    if(data.js){
+                        $('#injectedJS').html(data.js);
+                        localStorage.setItem('jsLocal', JSON.stringify(data.js));
+                    }
+
+                    if(data.css == $('#injectedCSS').text() && data.js == $('#injectedJS').text()){
+                        localStorage.setItem('version', data.version);
+                        setTimeout(function(){
+                            $.fancybox.close();
+                            utiles.alerta({
+                                    titulo:'Actualizado',
+                                    mensaje:data.mensaje,
+                                    btnOk:"Ok",
+                                    close: function(){app.loginAMain();}
+                                });
+                        },1000);
+                    }
+
+                } else {
+                    utiles.alerta({
+                                    titulo:'Error',
+                                    mensaje:'Ocurrió un error, favor de volver a intentar<br>'+data.codigo,
+                                    btnOk:"Ok"
+                                });
+                }
+
+            },
+            error: function() {
+                //handle the error
+                utiles.alerta({
+                                titulo:'Error',
+                                mensaje:'Ocurrió un error en la comunicación, favor de volver a intentar (04)',
+                                btnOk:"Ok"
+                            });
+            }
+        });
+    },
+    loginAMain: function(){
+
+        var login = JSON.parse(localStorage.getItem('login'));
+        if(login && login.user!=''){
+            $('#login').hide();
+            $('#contenidoSitio').attr('src',app.urlsitio);
+            $('#mainPage').show();
+        }
+                
+    },
     loginAction: function(recordar){
         //Ajax para validar el login
+        var correoVal = $('#loginForm [name="correo"]').val(),
+        passwordVal = $('#loginForm [name="password"]').val();
+        if(correoVal!='' && passwordVal!=''){
+            $.ajax({
+                url: app.servicio+'?act=loginAuth',
+                dataType: 'JSON',
+                type:'POST',
+                data: {correo:correoVal,password:passwordVal},
+                success: function(data, status) {
+                    if(data.codigo==1){
+                        
+                        utiles.alerta({
+                            titulo : 'Login',
+                            mensaje : data.mensaje,
+                            btnOk : "Continuar",
+                            close : function(){
+                                if($('[name="recordarUsuario"]').is(':checked')){
+                                    login = {user:data.usuario};
+                                    localStorage.setItem('login', JSON.stringify(login));
+                                }
+                                $('#login').hide();
+                                $('#contenidoSitio').attr('src',app.urlsitio);
+                                $('#mainPage').show();
+                            }
+                        });
+
+                    } else {
+                        utiles.alerta({
+                                        titulo : 'Login Error',
+                                        mensaje : data.mensaje,
+                                        btnOk : "Ok"
+                                    });
+                    }
+                },
+                error: function() {
+                    //handle the error
+                    utiles.alerta({
+                                    titulo:'Login Error',
+                                    mensaje:'Ocurrió un error en la comunicación, favor de volver a intentar (03)',
+                                    btnOk:"Ok"
+                                });
+                }
+            });
+            
+        } else {
+            utiles.alerta({
+                            titulo:'Login Error',
+                            mensaje:'Debes escribir tu usuario y contraseña para continuar',
+                            btnOk:"Continuar"
+                        });
+        }
     },
     actualizarCarrito: function(){
         //Actualizar numero de productos en el carrito
@@ -177,6 +317,56 @@ var app = {
 };
 /*JQUERY*/
 $(document).on('click','.cierreFancy',function(event){
+    event.preventDefault();
+    $.fancybox.close();
+});
+$(document).on('submit','#loginForm',function(){
+    app.loginAction();
+    return false;
+});
+$(document).on('click','.buscarHeader',function(){
+    (!$('#buscadorDesplegable').is(':visible'))?$('#buscadorDesplegable').show('slide',{direction:'up'}):$('#buscadorDesplegable').hide('slide',{direction:'up'});
+});
+$(document).on('click','#desplegarMenu',function(){
+    if($('#menuArticulos').hasClass('open')) $('#menuArticulos').removeClass('open');
+    $('#menuApp').addClass('open');
+});
+$(document).on('click','#menuOverlay',function(){
+    $('#menuApp').removeClass('open');
+});
+
+$(document).on('click','.contenidoMenu ul.opcionesMenu > li > a',function(event){
+    if($(this).next('ul.subMenu').length>0){
         event.preventDefault();
-        $.fancybox.close();
+        if($(this).hasClass('openSubMenu'))
+            $(this).removeClass('openSubMenu');
+        else {
+            $('.openSubMenu').removeClass('openSubMenu');
+            $(this).addClass('openSubMenu');
+        }
+    }
+});
+
+
+//$(document).on('click',"a[href^='https://www.ferrepat.com']",function(event){
+$(document).on('click',"a[href^='http://localhost:81/ferrepat_git']",function(event){
+    event.preventDefault();
+    $('#contenidoSitio').attr('src',$(this).attr('href')+'?app=true');
+});
+
+$(document).on('click','.showMosaico,.noMosaico',function(){
+    if ($(this).hasClass('showMosaico')) {
+        $('.toolsHeader a.logoInt').hide('slide',{direction:'left'});
+        $('.toolsHeader a.abrirMosaico').show('slide',{direction:'right'});
+    } else {
+        $('.toolsHeader a.logoInt').show('slide',{direction:'left'});
+        $('.toolsHeader a.abrirMosaico').hide('slide',{direction:'right'});
+    }
+    if($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
+});
+
+$(document).on('click','a.abrirMosaico',function(event){
+    event.preventDefault();
+    if($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
+   $('#menuArticulos').toggleClass('open');
 });
