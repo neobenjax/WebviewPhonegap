@@ -557,7 +557,7 @@ input.inputBuscador {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    width: calc(100% - 53px);
+    width: calc(100% - 54px);
 }
 
 ul.menu {
@@ -652,6 +652,9 @@ button#buscarMenu {
     width: 20px;
     margin-right: 5px;
     padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 button#buscarMenu > img {
@@ -665,7 +668,7 @@ input.inputBuscadorMenu {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    width: calc(100% - 28px);
+    width: calc(100% - 29px);
     font-family: 'open_sanscondensed_light';
 }
 

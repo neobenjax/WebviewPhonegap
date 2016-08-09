@@ -63,6 +63,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
         }
     },
     "dependent_plugins": {
@@ -70,6 +73,9 @@
             "PACKAGE_NAME": "codice.ferrepat.app"
         },
         "cordova-plugin-file": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-actionsheet": {
             "PACKAGE_NAME": "codice.ferrepat.app"
         }
     }

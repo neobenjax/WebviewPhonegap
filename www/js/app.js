@@ -171,7 +171,7 @@ var app = {
                     if(app.version != data.version)
                         setTimeout(function(){$.fancybox.close();app.actualizarApp();},1000);
                     else
-                        setTimeout(function(){$.fancybox.close();app.loginAMain();},1000);
+                        setTimeout(function(){$.fancybox.close();app.toMain();},1000);
 
                 } else {
                     utiles.alerta({
@@ -223,7 +223,7 @@ var app = {
                                     titulo:'Actualizado',
                                     mensaje:data.mensaje,
                                     btnOk:"Ok",
-                                    close: function(){app.loginAMain();}
+                                    close: function(){app.toMain();}
                                 });
                         },1000);
                     }
@@ -247,72 +247,23 @@ var app = {
             }
         });
     },
-    loginAMain: function(){
+    toMain: function(){
 
-        var login = JSON.parse(localStorage.getItem('login'));
-        if(login && login.user!=''){
-            $('#login').hide();
-            $('#contenidoSitio').attr('src',app.urlsitio);
-            $('#mainPage').show();
-        }
+        $('#mainPage').show();
+        $('#contenidoSitio').attr('src',app.urlsitio);
                 
-    },
-    loginAction: function(recordar){
-        //Ajax para validar el login
-        var correoVal = $('#loginForm [name="correo"]').val(),
-        passwordVal = $('#loginForm [name="password"]').val();
-        if(correoVal!='' && passwordVal!=''){
-            $.ajax({
-                url: app.servicio+'?act=loginAuth',
-                dataType: 'JSON',
-                type:'POST',
-                data: {correo:correoVal,password:passwordVal},
-                success: function(data, status) {
-                    if(data.codigo==1){
-                        
-                        utiles.alerta({
-                            titulo : 'Login',
-                            mensaje : data.mensaje,
-                            btnOk : "Continuar",
-                            close : function(){
-                                if($('[name="recordarUsuario"]').is(':checked')){
-                                    login = {user:data.usuario};
-                                    localStorage.setItem('login', JSON.stringify(login));
-                                }
-                                $('#login').hide();
-                                $('#contenidoSitio').attr('src',app.urlsitio);
-                                $('#mainPage').show();
-                            }
-                        });
-
-                    } else {
-                        utiles.alerta({
-                                        titulo : 'Login Error',
-                                        mensaje : data.mensaje,
-                                        btnOk : "Ok"
-                                    });
-                    }
-                },
-                error: function() {
-                    //handle the error
-                    utiles.alerta({
-                                    titulo:'Login Error',
-                                    mensaje:'Ocurrió un error en la comunicación, favor de volver a intentar (03)',
-                                    btnOk:"Ok"
-                                });
-                }
-            });
-            
-        } else {
-            utiles.alerta({
-                            titulo:'Login Error',
-                            mensaje:'Debes escribir tu usuario y contraseña para continuar',
-                            btnOk:"Continuar"
-                        });
-        }
     },
     actualizarCarrito: function(){
         //Actualizar numero de productos en el carrito
+    },
+    abrirMosaico:function(soloicono){
+
+        $('.toolsHeader a.logoInt').hide('slide',{direction:'left'});
+        $('.toolsHeader a.abrirMosaico').show('slide',{direction:'right'});
+        if(!soloicono){
+            if($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
+            $('#menuArticulos').addClass('open');
+        }
     }
 };
 /*JQUERY*/
@@ -320,10 +271,10 @@ $(document).on('click','.cierreFancy',function(event){
     event.preventDefault();
     $.fancybox.close();
 });
-$(document).on('submit','#loginForm',function(){
+/*$(document).on('submit','#loginForm',function(){
     app.loginAction();
     return false;
-});
+});*/
 $(document).on('click','.buscarHeader',function(){
     (!$('#buscadorDesplegable').is(':visible'))?$('#buscadorDesplegable').show('slide',{direction:'up'}):$('#buscadorDesplegable').hide('slide',{direction:'up'});
 });
@@ -368,5 +319,12 @@ $(document).on('click','.showMosaico,.noMosaico',function(){
 $(document).on('click','a.abrirMosaico',function(event){
     event.preventDefault();
     if($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
-   $('#menuArticulos').toggleClass('open');
+    $('#menuArticulos').toggleClass('open');
 });
+
+//Comunicacion entre el iframe y esta app
+window.addEventListener("message", function(msg) {
+  if(msg.data.type == "abrirMosaico"){
+    app.abrirMosaico(false);
+  }
+})

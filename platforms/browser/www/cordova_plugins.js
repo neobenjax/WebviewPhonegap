@@ -920,6 +920,14 @@ module.exports = [
             "navigator.notification",
             "navigator"
         ]
+    },
+    {
+        "file": "plugins/uk.co.workingedge.phonegap.plugin.launchnavigator/www/common.js",
+        "id": "uk.co.workingedge.phonegap.plugin.launchnavigator.Common",
+        "pluginId": "uk.co.workingedge.phonegap.plugin.launchnavigator",
+        "clobbers": [
+            "launchnavigator"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -945,7 +953,8 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "3.2.2",
     "cordova-plugin-statusbar": "2.1.3",
     "cordova-plugin-vibration": "2.1.1",
-    "cordova-plugin-whitelist": "1.2.2"
+    "cordova-plugin-whitelist": "1.2.2",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "3.1.1"
 }
 // BOTTOM OF METADATA
 });
