@@ -52,7 +52,7 @@
     font-weight: normal;
     font-style: normal;
 }
-
+html {overflow:hidden;width:100vw;}
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
@@ -66,6 +66,7 @@ body {
     width:100%;
     color:#9a9a9a;
     overflow:hidden;
+    width:100vw;
 }
 
 /* Portrait layout (default) */
@@ -609,8 +610,8 @@ div.menuApp {
     transition: all 0.3s;
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    right: 0;
+    width: 0%;
     height: 100vh;
     overflow: hidden;
     z-index: 999;
@@ -624,6 +625,7 @@ div.menuApp.open{
     -moz-transform: translateX(0%);
     -o-transform: translateX(0%);
     transform: translateX(0%);
+    width: 100%;
 }
 
 .menuCont {
@@ -768,6 +770,7 @@ ul.redesMenu > li > a.twitter{
 div#mainContainer {
     width:100%;
     overflow:hidden;
+    width:100vw;
 }
 a.abrirMosaico{
     display:none;

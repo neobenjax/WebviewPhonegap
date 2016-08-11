@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div id="buscadorDesplegable" class="BG_BLANCO" style="display:none;">
-                <form action="buscar" id="buscador" class="buscarDesplegable">
+                <form action="http://proyectosphp.codice.com/ferrepat_git/webapp/resultados.html" id="buscador" class="buscarDesplegable buscadorSubmit" target="contenidoSitio">
                     <button id="buscar"><img src="img/lupa_buscar.png" alt="B" id="submitBuscar"></button>
                     <input type="text" name="q" placeholder="ENCUENTRA EL PRODUCTO QUE NECESITAS" class="inputBuscador">
                 </form>
@@ -70,54 +70,131 @@
             </div>
             <div id="footerMenu">
                 <ul class="menu">
-                    <li><a href="#"><img src="img/tabicon_home.png" alt="Home" class="icono"></a></li>
-                    <li><a href="#"><img src="img/tabicon_puntosventa.png" alt="Ubicacion" class="icono"></a></li>
+                    <li>
+                        <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/inicio.html">
+                            <img src="img/tabicon_home.png" alt="Home" class="icono">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/puntos-venta.html">
+                            <img src="img/tabicon_puntosventa.png" alt="Ubicacion" class="icono">
+                        </a>
+                    </li>
                     <li class="carrito" id="carrito">
-                        <a href="#">
+                        <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/compra-paso1.html">
                             <span class="itemsCarrito BG_AZUL BLANCO" id="itemsCont"><span>3</span></span>
                             <img src="img/tabicon_carrito.png" alt="Mi Carrito" class="icono">
                         </a>
                     </li>
-                    <li><a href="#"><img src="img/tabicon_promos.png" alt="Promos" class="icono"></a></li>
-                    <li><a href="#"><img src="img/tabicon_cuenta.png" alt="Mi Cuenta" class="icono"></a></li>
+                    <li>
+                        <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones.html">
+                            <img src="img/tabicon_promos.png" alt="Promos" class="icono">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/cuenta.html">
+                            <img src="img/tabicon_cuenta.png" alt="Mi Cuenta" class="icono">
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
         <div id="menuApp" class="menuApp BLANCO">
             <div class="overlay" id="menuOverlay"></div>
             <div class="menuCont">
-                <form action="buscar" id="buscadorMenu" class="buscadorMenu BG_AZUL_GRAD">
+                <form action="http://proyectosphp.codice.com/ferrepat_git/webapp/resultados.html" id="buscadorMenu" class="buscadorMenu BG_AZUL_GRAD buscadorSubmit" target="contenidoSitio">
                     <button id="buscarMenu"><img src="img/lupa_buscar_menu.png" alt="B2" id="submitBuscarMenu"></button>
                     <input type="text" name="q" placeholder="Buscar" class="inputBuscadorMenu">
                 </form>
                 <div class="contenidoMenu BG_GRIS_2">
                     <ul class="opcionesMenu">
-                        <li class="BG_AZUL"><a href="#home" class="TXT_UPPER noMosaico">Inicio</a></li>
-                        <li class="BG_AZUL"><a href="http://localhost:81/ferrepat_git/movil/promociones.html" class="TXT_UPPER showMosaico">Promociones</a></li>
+                        <li class="BG_AZUL"><a href="http://proyectosphp.codice.com/ferrepat_git/webapp/inicio.html" class="TXT_UPPER noMosaico">Inicio</a></li>
+                        <li class="BG_AZUL"><a href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones.html" class="TXT_UPPER showMosaico">Promociones</a></li>
                         <li class="BG_AZUL">
                             <a href="#" class="TXT_UPPER">Tienda</a>
                             <ul class="subMenu">
-                                <li><a class="showMosaico" href="http://localhost:81/ferrepat_git/movil/promociones/articulos-para-el-hogar/275/">Artículos para el hogar</a></li>
-                                <li><a class="showMosaico" href="http://localhost:81/ferrepat_git/movil/promociones/material-electrico/285/">Materíal eléctrico</a></li>
-                                <li><a class="showMosaico" href="http://localhost:81/ferrepat_git/movil/promociones/herramientas/286/">Herramientas</a></li>
-                                <li><a class="showMosaico" href="http://localhost:81/ferrepat_git/movil/promociones/ferreteria/287/">Ferretería</a></li>
-                                <li><a class="showMosaico" href="#">Herramientas</a></li>
-                                <li><a class="showMosaico" href="#">Ferretería</a></li>
-                                <li><a class="showMosaico" href="#">Equipo de limpieza</a></li>
-                                <li><a class="showMosaico" href="#">Baños</a></li>
-                                <li><a class="showMosaico" href="#">Maquinaria ligera</a></li>
-                                <li><a class="showMosaico" href="#">Plomería</a></li>
-                                <li><a class="showMosaico" href="#">Láminas</a></li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/articulos-para-el-hogar/275/">
+                                        Artículos para el hogar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/material-electrico/285/">
+                                        Materíal eléctrico
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/herramientas/286/">
+                                        Herramientas
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/ferreteria/287/">
+                                        Ferretería
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/equipo-de-limpieza/288/">Equipo de limpieza
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/banos/289/">Baños
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/maquinaria-ligera/290/">Maquinaria ligera
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/plomeria/291/">Plomería
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="showMosaico" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/laminas/296/">Láminas
+                                    </a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="BG_AZUL"><a href="http://localhost:81/ferrepat_git/movil/compra-paso1.html" class="TXT_UPPER noMosaico">Carrito</a></li>
-                        <li class="BG_AZUL"><a href="http://localhost:81/ferrepat_git/movil/login.html" class="TXT_UPPER noMosaico noBorder">Mi cuenta</a></li>
-                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/contacto.html" class="TXT_UPPER noMosaico">Contacto</a></li>
-                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/quienes.html" class="TXT_UPPER noMosaico">Quiénes somos</a></li>
-                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/fq.html" class="TXT_UPPER noMosaico">Preguntas frecuentes</a></li>
-                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/puntos-venta.html" class="TXT_UPPER noMosaico">Puntos de venta</a></li>
-                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/politicas-venta.html" class="TXT_UPPER noMosaico">Políticas de venta</a></li>
-                        <li class="BG_GRIS_2"><a href="http://localhost:81/ferrepat_git/movil/politica-reembolso.html" class="TXT_UPPER noMosaico">Políticas de reembolso</a></li>
+                        <li class="BG_AZUL">
+                            <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/compra-paso1.html" class="TXT_UPPER noMosaico">
+                                Carrito
+                            </a>
+                        </li>
+                        <li class="BG_AZUL">
+                            <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/cuenta.html" class="TXT_UPPER noMosaico noBorder">
+                                Mi cuenta
+                            </a>
+                        </li>
+                        <li class="BG_GRIS_2">
+                            <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/contacto.html" class="TXT_UPPER noMosaico">
+                                Contacto
+                            </a>
+                        </li>
+                        <li class="BG_GRIS_2">
+                            <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/quienes.html" class="TXT_UPPER noMosaico">
+                                Quiénes somos
+                            </a>
+                        </li>
+                        <li class="BG_GRIS_2">
+                            <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/fq.html" class="TXT_UPPER noMosaico">
+                                Preguntas frecuentes
+                            </a>
+                        </li>
+                        <li class="BG_GRIS_2">
+                            <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/puntos-venta.html" class="TXT_UPPER noMosaico">
+                                Puntos de venta
+                            </a>
+                        </li>
+                        <li class="BG_GRIS_2">
+                            <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/politicas-venta.html" class="TXT_UPPER noMosaico">
+                                Políticas de venta
+                            </a>
+                        </li>
+                        <li class="BG_GRIS_2">
+                            <a href="http://proyectosphp.codice.com/ferrepat_git/webapp/politica-reembolso.html" class="TXT_UPPER noMosaico">
+                                Políticas de reembolso
+                            </a>
+                        </li>
                     </ul>
                     <ul class="redesMenu">
                         <li style="display:none;"><a href="whatsapp://send?text=Hello" class="socialLink whatsapp"></a></li>
@@ -130,16 +207,36 @@
         </div>
         <div id="menuArticulos">
             <div class="mosaicoMenu">
-                <a href="#"><img src="img/btn_art_hogar.png" alt="Artículos para el hogar"></a>
-                <a href="#"><img src="img/btn_mat_elec.png" alt="Material eléctrico"></a>
-                <a href="#"><img src="img/btn_herramientas.png" alt="Herramientas"></a>
-                <a href="#"><img src="img/btn_ferreteria.png" alt="Ferretería"></a>
-                <a href="#"><img src="img/btn_eq_limp.png" alt="Equipo de limpieza"></a>
-                <a href="#"><img src="img/btn_banhos.png" alt="Baños"></a>
-                <a href="#"><img src="img/btn_maq_ligera.png" alt="Maquinaria ligera"></a>
-                <a href="#"><img src="img/btn_plomeria.png" alt="Plomeria"></a>
-                <a href="#"><img src="img/btn_laminas.png" alt="Laminas"></a>
-                <a href="#"><img src="img/btn_promociones.png" alt="Promociones"></a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/articulos-para-el-hogar/275/">
+                    <img src="img/btn_art_hogar.png" alt="Artículos para el hogar">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/material-electrico/285/">
+                    <img src="img/btn_mat_elec.png" alt="Material eléctrico">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/herramientas/286/">
+                    <img src="img/btn_herramientas.png" alt="Herramientas">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/ferreteria/287/">
+                    <img src="img/btn_ferreteria.png" alt="Ferretería">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/equipo-de-limpieza/288/">
+                    <img src="img/btn_eq_limp.png" alt="Equipo de limpieza">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/banos/289/">
+                    <img src="img/btn_banhos.png" alt="Baños">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/maquinaria-ligera/290/">
+                    <img src="img/btn_maq_ligera.png" alt="Maquinaria ligera">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/plomeria/291/">
+                    <img src="img/btn_plomeria.png" alt="Plomeria">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones/laminas/296/">
+                    <img src="img/btn_laminas.png" alt="Laminas">
+                </a>
+                <a class="cerrarMenuArticulos" href="http://proyectosphp.codice.com/ferrepat_git/webapp/promociones.html">
+                    <img src="img/btn_promociones.png" alt="Promociones">
+                </a>
             </div>
         </div>
     </div>

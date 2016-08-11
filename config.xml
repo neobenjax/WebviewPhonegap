@@ -113,6 +113,7 @@
     <allow-intent href="geo:*" />
     <allow-intent href="whatsapp://*" />
     <allow-navigation href="https://www.ferrepat.com" />
+    <allow-navigation href="http://proyectosphp.codice.com/ferrepat_git" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>

@@ -61,7 +61,7 @@ var utiles = {
         }
         
         if(params.preload){
-            $imgLoader = $(document.createElement('img')).addClass('preloader').attr('src','../fancybox/fancybox_loading@2x.gif');
+            $imgLoader = $(document.createElement('img')).addClass('preloader').attr('src','img/loading.gif');
             $accionesConfirm.append($imgLoader);
         }
         
@@ -75,10 +75,18 @@ var utiles = {
         $.fancybox(configFancy);
     }
 };
+var source = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+if ( source ) {
+    // PhoneGap application
+    source_route = 'http://proyectosphp.codice.com/ferrepat_git/';
+} else {
+    // Web page
+    source_route = 'http://localhost:81/ferrepat_git/';
+}
 var app = {
     version: 0,
-    servicio:'http://localhost:81/ferrepatservice/index.php',
-    urlsitio:'http://localhost:81/ferrepat_git/index.php?app=true',
+    servicio : source_route+'webapp_service/index.php',
+    urlsitio : source_route+'index.php?app=true',
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -298,33 +306,62 @@ $(document).on('click','.contenidoMenu ul.opcionesMenu > li > a',function(event)
     }
 });
 
+$('.buscadorSubmit').submit(function(){
+    
+    if ( $(this).attr('id') )
+    {
+        
+        $('#buscadorDesplegable').hide('slide',{direction:'up'});
+
+    } else 
+    {
+        
+        $('#menuApp').removeClass('open');
+
+    }
+
+});
 
 //$(document).on('click',"a[href^='https://www.ferrepat.com']",function(event){
-$(document).on('click',"a[href^='http://localhost:81/ferrepat_git']",function(event){
+$(document).on('click',"a[href^='http://localhost:81/ferrepat_git'],a[href^='http://proyectosphp.codice.com/ferrepat_git']",function(event){
     event.preventDefault();
     $('#contenidoSitio').attr('src',$(this).attr('href')+'?app=true');
 });
 
 $(document).on('click','.showMosaico,.noMosaico',function(){
-    if ($(this).hasClass('showMosaico')) {
+    if ($(this).hasClass('showMosaico')) 
+    {
         $('.toolsHeader a.logoInt').hide('slide',{direction:'left'});
         $('.toolsHeader a.abrirMosaico').show('slide',{direction:'right'});
-    } else {
+
+    } else 
+    {
+
         $('.toolsHeader a.logoInt').show('slide',{direction:'left'});
         $('.toolsHeader a.abrirMosaico').hide('slide',{direction:'right'});
+
     }
-    if($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
+
+    if ($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
 });
 
 $(document).on('click','a.abrirMosaico',function(event){
     event.preventDefault();
-    if($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
+    if ($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
     $('#menuArticulos').toggleClass('open');
 });
 
+$(document).on('click','.cerrarMenuArticulos,.cerrarMenuArticulos img',function(){
+   $('#menuArticulos').removeClass('open'); 
+});
+
+
 //Comunicacion entre el iframe y esta app
 window.addEventListener("message", function(msg) {
-  if(msg.data.type == "abrirMosaico"){
+  
+  if(msg.data.type == "abrirMosaico")
+  {
     app.abrirMosaico(false);
   }
+  
 })

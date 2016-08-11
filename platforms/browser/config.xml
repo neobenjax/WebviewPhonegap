@@ -24,6 +24,7 @@
     <allow-intent href="geo:*" />
     <allow-intent href="whatsapp://*" />
     <allow-navigation href="https://www.ferrepat.com" />
+    <allow-navigation href="http://proyectosphp.codice.com/ferrepat_git" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="orientation" value="portrait" />
