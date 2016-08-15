@@ -200,7 +200,7 @@ var app = {
                                 mensaje:'Ocurrió un error en la comunicación, favor de volver a intentar (02)',
                                 btnOk:(intentos<3)?"Ok":'Cerrar',
                                 close:function(){
-                                    
+
                                     if(intentos < 3)
                                         setTimeout(function(){app.checkForUpdates();},1000);
                                     else
@@ -298,6 +298,16 @@ var app = {
         } else {
             $('#itemsCont').css('display','none').children('span').text(0);
         }
+    },
+    shareProduct:function(info){
+        console.log(info);
+        //Limitaciones
+        //http://www.joshmorony.com/posting-to-a-facebook-wall-with-phonegap-the-javascript-sdk/
+        window.plugins.socialsharing.share(
+            info.mensaje, 
+            null, 
+            info.imagen, 
+            info.link);
     }
 };
 /*JQUERY*/
@@ -400,6 +410,10 @@ window.addEventListener("message", function(msg) {
   else if (msg.data.type == "updateCart")
   {
     app.updateCart(msg.data.items);
+  }
+  else if (msg.data.type == "shareProduct" )
+  {
+    app.shareProduct(msg.data.info);
   }
   
 })

@@ -790,7 +790,13 @@ ul.redesMenu > li > a.facebook{
     background-position:-62px 0px;
 }
 ul.redesMenu > li > a.twitter{
-    background-position:-96px 0px;
+    background-position:-97px 0px;
+}
+ul.redesMenu > li > a.gplus{
+    background-position:-124px 0px;
+}
+ul.redesMenu > li > a.linkedin{
+    background-position:-153px 0px;
 }
 
 div#mainContainer {

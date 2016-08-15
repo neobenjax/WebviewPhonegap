@@ -66,6 +66,9 @@
         },
         "uk.co.workingedge.phonegap.plugin.launchnavigator": {
             "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
         }
     },
     "dependent_plugins": {

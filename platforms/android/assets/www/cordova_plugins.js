@@ -473,6 +473,13 @@ module.exports = [
         "merges": [
             "launchnavigator"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+        "id": "cordova-plugin-x-socialsharing.SocialSharing",
+        "clobbers": [
+            "window.plugins.socialsharing"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -500,7 +507,8 @@ module.exports.metadata =
     "cordova-plugin-vibration": "2.1.1",
     "cordova-plugin-whitelist": "1.2.2",
     "cordova-plugin-actionsheet": "2.2.2",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "3.1.1"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "3.1.1",
+    "cordova-plugin-x-socialsharing": "5.1.2"
 };
 // BOTTOM OF METADATA
 });
