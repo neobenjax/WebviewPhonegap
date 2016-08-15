@@ -75,6 +75,7 @@ var utiles = {
         $.fancybox(configFancy);
     }
 };
+
 var source = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
 if ( source ) {
     // PhoneGap application
@@ -83,6 +84,8 @@ if ( source ) {
     // Web page
     source_route = 'http://localhost:81/ferrepat_git/';
 }
+
+intentos = 0;
 var app = {
     version: 0,
     servicio : source_route+'webapp_service/index.php',
@@ -195,7 +198,16 @@ var app = {
                 utiles.alerta({
                                 titulo:'Error',
                                 mensaje:'Ocurrió un error en la comunicación, favor de volver a intentar (02)',
-                                btnOk:"Ok"
+                                btnOk:(intentos<3)?"Ok":'Cerrar',
+                                close:function(){
+                                    
+                                    if(intentos < 3)
+                                        setTimeout(function(){app.checkForUpdates();},1000);
+                                    else
+                                        navigator.app.exitApp();
+
+                                    intentos++;
+                                }
                             });
             }
         });
@@ -271,6 +283,20 @@ var app = {
         if(!soloicono){
             if($('#menuApp').hasClass('open')) $('#menuApp').removeClass('open');
             $('#menuArticulos').addClass('open');
+        }
+    },
+    putLogin:function(nombreUsuario){
+        $('#loginUsuario').css('display','block').find('#nombreUsuario').text(nombreUsuario);
+    },
+    popLogin:function(){
+        $('#loginUsuario').css('display','none');
+        $('#menuApp').removeClass('open');
+    },
+    updateCart:function(items){
+        if(items>0){
+            $('#itemsCont').css('display','table').children('span').text(items);
+        } else {
+            $('#itemsCont').css('display','none').children('span').text(0);
         }
     }
 };
@@ -359,9 +385,21 @@ $(document).on('click','.cerrarMenuArticulos,.cerrarMenuArticulos img',function(
 //Comunicacion entre el iframe y esta app
 window.addEventListener("message", function(msg) {
   
-  if(msg.data.type == "abrirMosaico")
+  if (msg.data.type == "abrirMosaico")
   {
     app.abrirMosaico(false);
+  }
+  else if (msg.data.type == "putLogin")
+  {
+    app.putLogin(msg.data.nombreUsuario);
+  }
+  else if (msg.data.type == "popLogin")
+  {
+    app.popLogin();
+  }
+  else if (msg.data.type == "updateCart")
+  {
+    app.updateCart(msg.data.items);
   }
   
 })

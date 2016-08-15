@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="codice.ferrepat.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>ferrepatApp</name>
+    <name>Ferrepat</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Ferrepat es la ferretería en línea más grande de México. En nuestro catálogo online encontrarás una enorme variedad de artículos de ferretería y las mejores marcas de herramientas que puedes comprar en internet desde donde te encuentres y recibirlo en la comodidad de tu hogar, taller o industria en cualquier parte de México. Ahora en una APP
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
+    <author email="info@codice.com" href="http://codice.com/">
         PhoneGap Team
     </author>
     <content src="index.html" />
