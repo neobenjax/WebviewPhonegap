@@ -315,10 +315,6 @@ $(document).on('click','.cierreFancy',function(event){
     event.preventDefault();
     $.fancybox.close();
 });
-/*$(document).on('submit','#loginForm',function(){
-    app.loginAction();
-    return false;
-});*/
 $(document).on('click','.buscarHeader',function(){
     (!$('#buscadorDesplegable').is(':visible'))?$('#buscadorDesplegable').show('slide',{direction:'up'}):$('#buscadorDesplegable').hide('slide',{direction:'up'});
 });
