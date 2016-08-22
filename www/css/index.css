@@ -323,9 +323,10 @@ input[type="checkbox"]:checked{
 
 
 div#contenido {
-    width: 100%;
-    height: calc(100vh - 120px);
+    width: 100%!important;
+    height: calc(100vh - 120px)!important;
     z-index: 1;
+    overflow:scroll !important;-webkit-overflow-scrolling:touch !important;
 }
 
 div#header {
@@ -335,6 +336,7 @@ div#footerMenu {
     height: 65px;
     width: 100%;
     overflow: hidden;
+    background:#fff;
 }
 div#contenido iframe {
     width: 100%;
