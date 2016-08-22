@@ -525,11 +525,14 @@ img.buscarHeader {
     display: inline-block;
     vertical-align: middle;
 }
-img#desplegarMenu.menuIcon {
+#desplegarMenu {
     height: 32px;
     display: inline-block;
     vertical-align: middle;
     margin-left: 15px;
+}
+#desplegarMenu img.menuIcon{
+    height:100%;
 }
 
 div#buscadorDesplegable {
