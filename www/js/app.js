@@ -30,6 +30,7 @@ LOG ERRORS:
  localStorage.setItem('login', JSON.stringify(login));
 */
 var utiles = {
+    
     alerta: function(params) {
         titulo = params.titulo;
         mensaje = params.mensaje;
@@ -74,6 +75,7 @@ var utiles = {
         
         $.fancybox(configFancy);
     }
+
 };
 
 var source = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
@@ -85,7 +87,9 @@ if ( source ) {
     source_route = 'http://localhost:81/ferrepat_git/';
 }
 
-intentos = 0;
+intentos = 0,
+internetIntentos=0,
+linkIntentos=0;
 var app = {
     version: 0,
     servicio : source_route+'webapp_service/index.php',
@@ -150,8 +154,29 @@ var app = {
 
         internet = app.checkConnection('onDeviceReady');
 
-        if (internet.tipo!=0) app.checkForUpdates();
-        else utiles.alerta({titulo:'Conexión',mensaje:internet.lbl,btnOk:'Ok'})
+        if (internet.tipo!=0) 
+            app.checkForUpdates();
+        else 
+        {
+            utiles.alerta(
+                        {
+                            titulo:'Conexión',
+                            mensaje:internet.lbl,
+                            btnOk:(intentos<2)?"Reintentar":'Cerrar',
+                            close:function(){
+
+                                    if(internetIntentos < 3)
+                                        setTimeout(function(){app.onDeviceReady();},1000);
+                                    else
+                                        navigator.app.exitApp();
+
+                                    internetIntentos++;
+
+                                }
+                        }
+                    )
+
+        }
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -246,6 +271,16 @@ var app = {
                                     close: function(){app.toMain();}
                                 });
                         },1000);
+                    } else {
+                        setTimeout(function(){
+                            $.fancybox.close();
+                            utiles.alerta({
+                                    titulo:'Error',
+                                    mensaje:'Ha ocurrido un error durante la actualización, favor de reiniciar la aplicación.',
+                                    btnOk:"Cerrar",
+                                    close: function(){navigator.app.exitApp();}
+                                });
+                        },1000);
                     }
 
                 } else {
@@ -275,6 +310,30 @@ var app = {
     },
     actualizarCarrito: function(){
         //Actualizar numero de productos en el carrito
+    },
+    validarInteraccion: function(msg){
+
+        if (msg.data.type == "abrirMosaico")
+        {
+            app.abrirMosaico(false);
+        }
+        else if (msg.data.type == "putLogin")
+        {
+            app.putLogin(msg.data.nombreUsuario);
+        }
+        else if (msg.data.type == "popLogin")
+        {
+            app.popLogin();
+        }
+        else if (msg.data.type == "updateCart")
+        {
+            app.updateCart(msg.data.items);
+        }
+        else if (msg.data.type == "shareProduct" )
+        {
+            app.shareProduct(msg.data.info);
+        }
+
     },
     abrirMosaico:function(soloicono){
 
@@ -357,7 +416,25 @@ $('.buscadorSubmit').submit(function(){
 //$(document).on('click',"a[href^='https://www.ferrepat.com']",function(event){
 $(document).on('click',"a[href^='http://localhost:81/ferrepat_git'],a[href^='http://proyectosphp.codice.com/ferrepat_git']",function(event){
     event.preventDefault();
-    $('#contenidoSitio').attr('src',$(this).attr('href')+'?app=true');
+    internet = app.checkConnection('link');
+
+    if (internet.tipo!=0) {
+        linkIntentos = 0;
+        $('#contenidoSitio').attr('src',$(this).attr('href')+'?app=true');
+    }
+    else 
+    {
+        utiles.alerta(
+                    {
+                        titulo:'Conexión',
+                        mensaje:internet.lbl,
+                        btnOk:"Ok"
+                    }
+                )
+        $('#contenidoSitio').attr('src','404.html');
+
+    }
+
 });
 
 $(document).on('click','.showMosaico,.noMosaico',function(){
@@ -390,26 +467,7 @@ $(document).on('click','.cerrarMenuArticulos,.cerrarMenuArticulos img',function(
 
 //Comunicacion entre el iframe y esta app
 window.addEventListener("message", function(msg) {
+
+    app.validarInteraccion(msg);
   
-  if (msg.data.type == "abrirMosaico")
-  {
-    app.abrirMosaico(false);
-  }
-  else if (msg.data.type == "putLogin")
-  {
-    app.putLogin(msg.data.nombreUsuario);
-  }
-  else if (msg.data.type == "popLogin")
-  {
-    app.popLogin();
-  }
-  else if (msg.data.type == "updateCart")
-  {
-    app.updateCart(msg.data.items);
-  }
-  else if (msg.data.type == "shareProduct" )
-  {
-    app.shareProduct(msg.data.info);
-  }
-  
-})
+});

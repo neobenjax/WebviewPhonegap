@@ -378,6 +378,9 @@ div#contenido iframe {
     font-size:14px;
     padding:5px 20px;
 }
+.accionesConfirmLayer .preloader{
+    width: 50px;
+}
 
 img.logoLogin {
     width: 150px;
@@ -851,4 +854,12 @@ a.abrirMosaico > img{
 }
 #menuArticulos .mosaicoMenu img{
     width:100%;
+}
+
+h1.oopsNoInternet{
+    font-size: 40px;
+}
+
+p.texto404{
+    font-size: 16px;
 }
