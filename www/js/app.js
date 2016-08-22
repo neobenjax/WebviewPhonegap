@@ -333,6 +333,10 @@ var app = {
         {
             app.shareProduct(msg.data.info);
         }
+        else if (msg.data.type == "openLink" )
+        {
+            app.openLink(msg.data.url);
+        }
 
     },
     abrirMosaico:function(soloicono){
@@ -367,6 +371,10 @@ var app = {
             null, 
             info.imagen, 
             info.link);
+    },
+    openLink:function(url){
+        console.log(url);
+        $('#contenidoSitio').attr('src',url);
     }
 };
 /*JQUERY*/
