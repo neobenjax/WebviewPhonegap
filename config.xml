@@ -117,6 +117,8 @@
     <allow-navigation href="https://www.ferrepat.com" />
     <allow-navigation href="http://proyectosphp.codice.com/ferrepat_git" />
     <platform name="android">
+        <allow-intent href="http://*/*" />
+        <allow-intent href="https://*/*" />
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
