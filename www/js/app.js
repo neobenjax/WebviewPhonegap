@@ -29,6 +29,7 @@ LOG ERRORS:
 
  localStorage.setItem('login', JSON.stringify(login));
 */
+
 var utiles = {
     
     alerta: function(params) {
@@ -372,6 +373,14 @@ var app = {
             info.imagen, 
             info.link);
     },
+    shareProductFB:function(info){
+        console.log(info);
+        window.plugins.socialsharing.share(
+            info.mensaje, 
+            null, 
+            null, 
+            info.link);
+    },
     openLink:function(url){
         console.log(url);
         $('#contenidoSitio').attr('src',url);
@@ -389,7 +398,7 @@ $(document).on('click','#desplegarMenu',function(){
     if($('#menuArticulos').hasClass('open')) $('#menuArticulos').removeClass('open');
     $('#menuApp').addClass('open');
 });
-$(document).on('click','#menuOverlay',function(){
+$(document).on('click','#menuOverlayClick',function(){
     $('#menuApp').removeClass('open');
 });
 
@@ -422,7 +431,7 @@ $('.buscadorSubmit').submit(function(){
 });
 
 //$(document).on('click',"a[href^='https://www.ferrepat.com']",function(event){
-$(document).on('click',"a[href^='http://localhost:81/ferrepat_git'],a[href^='http://proyectosphp.codice.com/ferrepat_git']",function(event){
+$(document).on('click',"a[href^='http://localhost:81/ferrepat_git'],a[href^='http://proyectosphp.codice.com/ferrepat_git'],a[href^='https://www.ferrepat.com']",function(event){
     event.preventDefault();
     internet = app.checkConnection('link');
 
