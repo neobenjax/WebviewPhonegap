@@ -334,6 +334,10 @@ var app = {
         {
             app.shareProduct(msg.data.info);
         }
+        else if (msg.data.type == "shareProductFB" )
+        {
+            app.shareProductFB(msg.data.info);
+        }
         else if (msg.data.type == "openLink" )
         {
             app.openLink(msg.data.url);
@@ -375,11 +379,12 @@ var app = {
     },
     shareProductFB:function(info){
         console.log(info);
-        window.plugins.socialsharing.share(
-            info.mensaje, 
-            null, 
-            null, 
-            info.link);
+        window.plugins.socialsharing.shareViaFacebook(
+            'Mensaje vía Facebook',
+            null /* img */,
+            info.link /* url */,
+            function() {console.log('share ok')},
+            function(errormsg){alert(errormsg)})
     },
     openLink:function(url){
         console.log(url);
