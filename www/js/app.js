@@ -131,6 +131,7 @@ var app = {
         }
     },
     onDeviceReady: function() {
+        StatusBar.overlaysWebView(false);
         var version = JSON.parse(localStorage.getItem('version'));
 
         if(version==null){
