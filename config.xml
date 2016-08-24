@@ -12,7 +12,7 @@
     <preference name="android-minSdkVersion" value="14" />
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
-    <preference name="fullscreen" value="true" />
+    <!-- <preference name="fullscreen" value="true" /> -->
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
     <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1" />
     <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0" />
