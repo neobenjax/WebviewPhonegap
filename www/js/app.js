@@ -345,6 +345,12 @@ var app = {
         {
             app.openLink(msg.data.url);
         }
+        else if (msg.data.type == "overflowContent" )
+        {
+            app.overflowContent(msg.data.heightPage);
+        }
+
+
 
     },
     abrirMosaico:function(soloicono){
@@ -392,6 +398,14 @@ var app = {
     openLink:function(url){
         console.log(url);
         $('#contenidoSitio').attr('src',url);
+    },
+    overflowContent:function(heightPage){
+        $('#contenidoSitio').css({
+            'overflow-y':'scroll',
+            'height':heightPage+'px'
+        });
+        console.log('Pollo: '+heightPage);
+        console.log($('#contenidoSitio').height());
     }
 };
 /*JQUERY*/
