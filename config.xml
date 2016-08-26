@@ -12,7 +12,6 @@
     <preference name="android-minSdkVersion" value="14" />
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
-    <!-- <preference name="fullscreen" value="true" /> -->
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
     <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1" />
     <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0" />
@@ -106,13 +105,12 @@
         <splash height="1920" platform="windows" src="www/res/screen/windows/SplashScreenPhone.scale-240.png" width="1152" />
     </platform>
     <access origin="*" />
-    
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="whatsapp://*" />
-    <allow-navigation href="*" /> 
+    <allow-navigation href="*" />
     <allow-navigation href="https://www.ferrepat.com" />
     <allow-navigation href="http://proyectosphp.codice.com/ferrepat_git" />
     <allow-navigation href="https://gateway.payulatam.com/*" />
@@ -125,7 +123,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <allow-navigation href="*" />
-        
     </platform>
     <engine name="android" spec="~5.1.1" />
+    <engine name="ios" spec="~4.1.1" />
 </widget>
