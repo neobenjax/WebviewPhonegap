@@ -58,7 +58,7 @@ var utiles = {
         $accionesConfirm = $(document.createElement('div')).addClass('accionesConfirmLayer');
         
         if(btnOk!=false){
-            $boton = $(document.createElement('a')).addClass('cierreFancy').text(btnOk);
+            $boton = $(document.createElement('a')).addClass('cierreFancy').text(btnOk).attr('href','#');
             $accionesConfirm.append($boton);
         }
         
@@ -502,6 +502,24 @@ $(document).on('click','a.abrirMosaico',function(event){
 $(document).on('click','.cerrarMenuArticulos,.cerrarMenuArticulos img',function(){
    $('#menuArticulos').removeClass('open'); 
 });
+
+
+$("#menuApp").swipe( {
+    //Generic swipe handler for all directions
+    swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+      
+      if(direction=='right')
+        $('#menuApp').removeClass('open');
+
+    },
+    swipeStatus:function(event, phase) {
+      if (phase=="cancel") {
+      }
+    },
+    threshold:100
+
+  });
+
 
 
 //Comunicacion entre el iframe y esta app
