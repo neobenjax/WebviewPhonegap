@@ -349,6 +349,10 @@ var app = {
         {
             app.overflowContent(msg.data.heightPage);
         }
+        else if (msg.data.type == "openExternal" )
+        {
+            app.openExternal(msg.data.url);
+        }
 
 
 
@@ -406,6 +410,9 @@ var app = {
         });
         console.log('Pollo: '+heightPage);
         console.log($('#contenidoSitio').height());
+    },
+    openExternal:function(link){
+        window.open(link, "_system");
     }
 };
 /*JQUERY*/
