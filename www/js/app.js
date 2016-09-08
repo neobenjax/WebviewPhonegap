@@ -523,9 +523,10 @@ $("#menuApp").swipe( {
       if (phase=="cancel") {
       }
     },
-    threshold:100
+    threshold:100,
+    allowPageScroll:"auto"
 
-  });
+});
 
 
 
