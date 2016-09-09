@@ -1,24 +1,4 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
 
 <head>
@@ -54,8 +34,12 @@
                         <img src="img/icono_moisaico.png" alt="Categorías">
                     </a>
                     <div class="rightTools">
-                        <img src="img/lupa_menu.png" alt="B" class="buscarHeader">
-                        <img src="img/menu_hamburguesa.png" alt="B" class="menuIcon" id="desplegarMenu">
+                        <a href="#" class="buscarHeader">
+                            <img src="img/lupa_menu.png" alt="B" class="iconoBuscar">
+                        </a>
+                        <a href="#" id="desplegarMenu">
+                            <img src="img/menu_hamburguesa.png" alt="B" class="menuIcon" id="desplegarMenu">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -100,7 +84,9 @@
             </div>
         </div>
         <div id="menuApp" class="menuApp BLANCO">
-            <div class="overlay" id="menuOverlay"></div>
+            <div class="overlay" id="menuOverlay">
+                <a href="#" id="menuOverlayClick"></a>
+            </div>
             <div class="menuCont">
                 <form action="http://proyectosphp.codice.com/ferrepat_git/webapp/resultados.html" id="buscadorMenu" class="buscadorMenu BG_AZUL_GRAD buscadorSubmit" target="contenidoSitio">
                     <button id="buscarMenu"><img src="img/lupa_buscar_menu.png" alt="B2" id="submitBuscarMenu"></button>
@@ -270,7 +256,9 @@
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="fancybox/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
     <script type="text/javascript" src="js/SocialSharing.js"></script>
+    <script type="text/javascript" src="js/paypal-mobile-js-helper.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript">
         app.initialize();

@@ -69,6 +69,9 @@
         },
         "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "com.paypal.cordova.mobilesdk": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
         }
     },
     "dependent_plugins": {
@@ -76,6 +79,9 @@
             "PACKAGE_NAME": "codice.ferrepat.app"
         },
         "cordova-plugin-file": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "card.io.cordova.mobilesdk": {
             "PACKAGE_NAME": "codice.ferrepat.app"
         }
     }

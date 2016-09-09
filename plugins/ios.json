@@ -1,0 +1,91 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-device-motion": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "com.paypal.cordova.mobilesdk": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "card.io.cordova.mobilesdk": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        }
+    }
+}

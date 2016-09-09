@@ -95,6 +95,14 @@
                         {
                             "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"CardIO\"><param name=\"android-package\" value=\"io.card.cordova.sdk.CardIOCordovaPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PayPalMobile\"><param name=\"android-package\" value=\"com.paypal.cordova.sdk.PayPalMobileCordovaPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -228,6 +236,12 @@
             "PACKAGE_NAME": "codice.ferrepat.app"
         },
         "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "card.io.cordova.mobilesdk": {
+            "PACKAGE_NAME": "codice.ferrepat.app"
+        },
+        "com.paypal.cordova.mobilesdk": {
             "PACKAGE_NAME": "codice.ferrepat.app"
         }
     },
@@ -713,6 +727,20 @@
             "clobbers": [
                 "window.plugins.socialsharing"
             ]
+        },
+        {
+            "file": "plugins/card.io.cordova.mobilesdk/www/cdv-plugin-card-io.js",
+            "id": "card.io.cordova.mobilesdk.CardIO",
+            "clobbers": [
+                "CardIO"
+            ]
+        },
+        {
+            "file": "plugins/com.paypal.cordova.mobilesdk/www/cdv-plugin-paypal-mobile-sdk.js",
+            "id": "com.paypal.cordova.mobilesdk.PayPalMobile",
+            "clobbers": [
+                "PayPalMobile"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -739,6 +767,8 @@
         "cordova-plugin-whitelist": "1.2.2",
         "cordova-plugin-actionsheet": "2.2.2",
         "uk.co.workingedge.phonegap.plugin.launchnavigator": "3.1.1",
-        "cordova-plugin-x-socialsharing": "5.1.2"
+        "cordova-plugin-x-socialsharing": "5.1.2",
+        "card.io.cordova.mobilesdk": "2.0.2",
+        "com.paypal.cordova.mobilesdk": "3.2.2"
     }
 }

@@ -29,7 +29,27 @@ LOG ERRORS:
 
  localStorage.setItem('login', JSON.stringify(login));
 */
-var utiles = {
+liberacion = false;
+
+var source = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+if ( source ) {
+    // PhoneGap application
+    source_route = (!liberacion)?'http://proyectosphp.codice.com/ferrepat_git/':'https://www.ferrepat.com/';
+} else {
+    // Web page
+    source_route = 'http://localhost:81/ferrepat_git/';
+}
+
+intentos = 0,
+internetIntentos=0,
+linkIntentos=0;
+
+var app={};
+var utiles={};
+var pasarelas={};
+
+utiles = {
+    
     alerta: function(params) {
         titulo = params.titulo;
         mensaje = params.mensaje;
@@ -56,7 +76,7 @@ var utiles = {
         $accionesConfirm = $(document.createElement('div')).addClass('accionesConfirmLayer');
         
         if(btnOk!=false){
-            $boton = $(document.createElement('a')).addClass('cierreFancy').text(btnOk);
+            $boton = $(document.createElement('a')).addClass('cierreFancy').text(btnOk).attr('href','#');
             $accionesConfirm.append($boton);
         }
         
@@ -74,19 +94,93 @@ var utiles = {
         
         $.fancybox(configFancy);
     }
+
 };
 
-var source = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-if ( source ) {
-    // PhoneGap application
-    source_route = 'http://proyectosphp.codice.com/ferrepat_git/';
-} else {
-    // Web page
-    source_route = 'http://localhost:81/ferrepat_git/';
+pasarelas.paypal = {
+    environment : (!liberacion)?'PayPalEnvironmentSandbox':'PayPalEnvironmentProduction',
+    cartInfo : {},
+    initPaymentUI : function () {
+        var clientIDs = {
+            "PayPalEnvironmentProduction": "YOUR_PRODUCTION_CLIENT_ID",
+            "PayPalEnvironmentSandbox": "ATZdwWaBm5-YqagYeMblXosZ_zFVjsvPzkO8NH4h7A6n-2aGSF5bUrtzTOGjxmX24oozI9-gaD7pozk-"
+        };
+        PayPalMobile.init(clientIDs, pasarelas.paypal.onPayPalMobileInit);
+    },
+    onSuccesfulPayment : function(payment) {
+        console.log("payment success: " + JSON.stringify(payment, null, 4));
+    },
+    // This code is only used for independent card.io scanning abilities
+    onCardIOComplete: function(card) {
+        console.log("Card Scanned success: " + JSON.stringify(card, null, 4));
+    },
+    onAuthorizationCallback : function(authorization) {
+        console.log("authorization: " + JSON.stringify(authorization, null, 4));
+    },
+    createPayment : function () {
+        // for simplicity use predefined amount
+        // optional payment details for more information check [helper js file](https://github.com/paypal/PayPal-Cordova-Plugin/blob/master/www/paypal-mobile-js-helper.js)
+        var paymentDetails = new PayPalPaymentDetails
+                                (
+                                    pasarelas.paypal.cartInfo.subtotal,
+                                    pasarelas.paypal.cartInfo.envio,
+                                    pasarelas.paypal.cartInfo.impuesto
+                                );
+        var payment = new PayPalPayment
+                            (
+                                pasarelas.paypal.cartInfo.cantidad,
+                                pasarelas.paypal.cartInfo.moneda,
+                                pasarelas.paypal.cartInfo.descripcion,
+                                "Sale",
+                                paymentDetails);
+        return payment;
+    },
+    configuration : function () {
+        // for more options see `paypal-mobile-js-helper.js`
+        var config = new PayPalConfiguration({
+            merchantName: "FERREPAT S.A. DE C.V.",
+            merchantPrivacyPolicyURL: "https://www.ferrepat.com/aviso_privacidad.html",
+            merchantUserAgreementURL: "https://www.ferrepat.com/terminos_condiciones.html"
+        });
+        return config;
+    },
+    onPrepareRender : function() {
+        console.log('onPrepareRenderer - No utilizado');
+    },
+    singlePayment : function(cart) {
+        pasarelas.paypal.cartInfo = cart;
+
+        PayPalMobile.renderSinglePaymentUI
+        (
+            pasarelas.paypal.createPayment(),
+            pasarelas.paypal.onSuccesfulPayment,
+            pasarelas.paypal.onUserCanceled
+        );
+    },
+    futrePayment : function() {
+        PayPalMobile.renderFuturePaymentUI
+        (
+            pasarelas.paypal.onAuthorizationCallback,
+            pasarelas.paypal.onUserCanceled
+        );
+    },
+    onPayPalMobileInit : function() {
+        // must be called
+        // use PayPalEnvironmentNoNetwork mode to get look and feel of the flow
+        PayPalMobile.prepareToRender
+        (
+            pasarelas.paypal.environment,
+            pasarelas.paypal.configuration(),
+            pasarelas.paypal.onPrepareRender
+        );
+
+    },
+    onUserCanceled : function(result) {
+        console.log(result);
+    }
 }
 
-intentos = 0;
-var app = {
+app = {
     version: 0,
     servicio : source_route+'webapp_service/index.php',
     urlsitio : source_route+'index.php?app=true',
@@ -126,6 +220,13 @@ var app = {
         }
     },
     onDeviceReady: function() {
+
+        //Inicializando pasarela
+        pasarelas.paypal.initPaymentUI();
+
+        if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) )
+            StatusBar.overlaysWebView(false);
+        
         var version = JSON.parse(localStorage.getItem('version'));
 
         if(version==null){
@@ -150,8 +251,29 @@ var app = {
 
         internet = app.checkConnection('onDeviceReady');
 
-        if (internet.tipo!=0) app.checkForUpdates();
-        else utiles.alerta({titulo:'Conexión',mensaje:internet.lbl,btnOk:'Ok'})
+        if (internet.tipo!=0) 
+            app.checkForUpdates();
+        else 
+        {
+            utiles.alerta(
+                        {
+                            titulo:'Conexión',
+                            mensaje:internet.lbl,
+                            btnOk:(intentos<2)?"Reintentar":'Cerrar',
+                            close:function(){
+
+                                    if(internetIntentos < 3)
+                                        setTimeout(function(){app.onDeviceReady();},1000);
+                                    else
+                                        navigator.app.exitApp();
+
+                                    internetIntentos++;
+
+                                }
+                        }
+                    )
+
+        }
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -246,6 +368,16 @@ var app = {
                                     close: function(){app.toMain();}
                                 });
                         },1000);
+                    } else {
+                        setTimeout(function(){
+                            $.fancybox.close();
+                            utiles.alerta({
+                                    titulo:'Error',
+                                    mensaje:'Ha ocurrido un error durante la actualización, favor de reiniciar la aplicación.',
+                                    btnOk:"Cerrar",
+                                    close: function(){navigator.app.exitApp();}
+                                });
+                        },1000);
                     }
 
                 } else {
@@ -275,6 +407,52 @@ var app = {
     },
     actualizarCarrito: function(){
         //Actualizar numero de productos en el carrito
+    },
+    validarInteraccion: function(msg){
+
+        if (msg.data.type == "abrirMosaico")
+        {
+            app.abrirMosaico(false);
+        }
+        else if (msg.data.type == "putLogin")
+        {
+            app.putLogin(msg.data.nombreUsuario);
+        }
+        else if (msg.data.type == "popLogin")
+        {
+            app.popLogin();
+        }
+        else if (msg.data.type == "updateCart")
+        {
+            app.updateCart(msg.data.items);
+        }
+        else if (msg.data.type == "shareProduct" )
+        {
+            app.shareProduct(msg.data.info);
+        }
+        else if (msg.data.type == "shareProductFB" )
+        {
+            app.shareProductFB(msg.data.info);
+        }
+        else if (msg.data.type == "openLink" )
+        {
+            app.openLink(msg.data.url);
+        }
+        else if (msg.data.type == "overflowContent" )
+        {
+            app.overflowContent(msg.data.heightPage);
+        }
+        else if (msg.data.type == "openExternal" )
+        {
+            app.openExternal(msg.data.url);
+        }
+        else if (msg.data.type == "paypal" )
+        {
+            app.paypal(msg.data.cart);
+        }
+
+
+
     },
     abrirMosaico:function(soloicono){
 
@@ -308,6 +486,35 @@ var app = {
             null, 
             info.imagen, 
             info.link);
+    },
+    shareProductFB:function(info){
+        console.log(info);
+        window.plugins.socialsharing.shareViaFacebook(
+            'Mensaje vía Facebook',
+            null /* img */,
+            info.link /* url */,
+            function() {console.log('share ok')},
+            function(errormsg){alert(errormsg)})
+    },
+    openLink:function(url){
+        console.log(url);
+        $('#contenidoSitio').attr('src',url);
+    },
+    overflowContent:function(heightPage){
+        $('#contenidoSitio').css({
+            'overflow-y':'scroll',
+            'height':heightPage+'px'
+        });
+        console.log('Pollo: '+heightPage);
+        console.log($('#contenidoSitio').height());
+    },
+    openExternal:function(link){
+        window.open(link, "_system");
+    },
+    paypal:function(cart){
+
+        pasarelas.paypal.singlePayment(cart);
+
     }
 };
 /*JQUERY*/
@@ -315,10 +522,6 @@ $(document).on('click','.cierreFancy',function(event){
     event.preventDefault();
     $.fancybox.close();
 });
-/*$(document).on('submit','#loginForm',function(){
-    app.loginAction();
-    return false;
-});*/
 $(document).on('click','.buscarHeader',function(){
     (!$('#buscadorDesplegable').is(':visible'))?$('#buscadorDesplegable').show('slide',{direction:'up'}):$('#buscadorDesplegable').hide('slide',{direction:'up'});
 });
@@ -326,7 +529,7 @@ $(document).on('click','#desplegarMenu',function(){
     if($('#menuArticulos').hasClass('open')) $('#menuArticulos').removeClass('open');
     $('#menuApp').addClass('open');
 });
-$(document).on('click','#menuOverlay',function(){
+$(document).on('click','#menuOverlayClick',function(){
     $('#menuApp').removeClass('open');
 });
 
@@ -359,9 +562,27 @@ $('.buscadorSubmit').submit(function(){
 });
 
 //$(document).on('click',"a[href^='https://www.ferrepat.com']",function(event){
-$(document).on('click',"a[href^='http://localhost:81/ferrepat_git'],a[href^='http://proyectosphp.codice.com/ferrepat_git']",function(event){
+$(document).on('click',"a[href^='http://localhost:81/ferrepat_git'],a[href^='http://proyectosphp.codice.com/ferrepat_git'],a[href^='https://www.ferrepat.com']",function(event){
     event.preventDefault();
-    $('#contenidoSitio').attr('src',$(this).attr('href')+'?app=true');
+    internet = app.checkConnection('link');
+
+    if (internet.tipo!=0) {
+        linkIntentos = 0;
+        $('#contenidoSitio').attr('src',$(this).attr('href')+'?app=true');
+    }
+    else 
+    {
+        utiles.alerta(
+                    {
+                        titulo:'Conexión',
+                        mensaje:internet.lbl,
+                        btnOk:"Ok"
+                    }
+                )
+        $('#contenidoSitio').attr('src','404.html');
+
+    }
+
 });
 
 $(document).on('click','.showMosaico,.noMosaico',function(){
@@ -392,28 +613,28 @@ $(document).on('click','.cerrarMenuArticulos,.cerrarMenuArticulos img',function(
 });
 
 
+$("#menuApp").swipe( {
+    //Generic swipe handler for all directions
+    swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+      
+      if(direction=='right')
+        $('#menuApp').removeClass('open');
+
+    },
+    swipeStatus:function(event, phase) {
+      if (phase=="cancel") {
+      }
+    },
+    threshold:100,
+    allowPageScroll:"auto"
+
+});
+
+
+
 //Comunicacion entre el iframe y esta app
 window.addEventListener("message", function(msg) {
+
+    app.validarInteraccion(msg);
   
-  if (msg.data.type == "abrirMosaico")
-  {
-    app.abrirMosaico(false);
-  }
-  else if (msg.data.type == "putLogin")
-  {
-    app.putLogin(msg.data.nombreUsuario);
-  }
-  else if (msg.data.type == "popLogin")
-  {
-    app.popLogin();
-  }
-  else if (msg.data.type == "updateCart")
-  {
-    app.updateCart(msg.data.items);
-  }
-  else if (msg.data.type == "shareProduct" )
-  {
-    app.shareProduct(msg.data.info);
-  }
-  
-})
+});

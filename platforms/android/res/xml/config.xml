@@ -71,6 +71,12 @@
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
+    <feature name="CardIO">
+        <param name="android-package" value="io.card.cordova.sdk.CardIOCordovaPlugin" />
+    </feature>
+    <feature name="PayPalMobile">
+        <param name="android-package" value="com.paypal.cordova.sdk.PayPalMobileCordovaPlugin" />
+    </feature>
     <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
@@ -89,13 +95,16 @@
     <splash density="port-xhdpi" src="www/res/screen/android/drawable-port-xhdpi-screen.png" />
     <splash density="port-xxhdpi" src="www/res/screen/android/drawable-port-xxhdpi-screen.png" />
     <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
     <allow-intent href="market:*" />
+    <access launch-external="yes" origin="geo:*" />
     <name>Ferrepat</name>
     <description>
         Ferrepat es la ferretería en línea más grande de México. En nuestro catálogo online encontrarás una enorme variedad de artículos de ferretería y las mejores marcas de herramientas que puedes comprar en internet desde donde te encuentres y recibirlo en la comodidad de tu hogar, taller o industria en cualquier parte de México. Ahora en una APP
     </description>
     <author email="info@codice.com" href="http://codice.com/">
-        PhoneGap Team
+        Equipo de Códice
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
@@ -104,13 +113,13 @@
     <preference name="target-device" value="handset" />
     <icon src="icon.png" />
     <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="whatsapp://*" />
+    <allow-navigation href="*" />
     <allow-navigation href="https://www.ferrepat.com" />
     <allow-navigation href="http://proyectosphp.codice.com/ferrepat_git" />
+    <allow-navigation href="https://gateway.payulatam.com/*" />
 </widget>

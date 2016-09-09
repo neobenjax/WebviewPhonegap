@@ -29,8 +29,26 @@ LOG ERRORS:
 
  localStorage.setItem('login', JSON.stringify(login));
 */
+liberacion = false;
 
-var utiles = {
+var source = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+if ( source ) {
+    // PhoneGap application
+    source_route = (!liberacion)?'http://proyectosphp.codice.com/ferrepat_git/':'https://www.ferrepat.com/';
+} else {
+    // Web page
+    source_route = 'http://localhost:81/ferrepat_git/';
+}
+
+intentos = 0,
+internetIntentos=0,
+linkIntentos=0;
+
+var app={};
+var utiles={};
+var pasarelas={};
+
+utiles = {
     
     alerta: function(params) {
         titulo = params.titulo;
@@ -79,19 +97,111 @@ var utiles = {
 
 };
 
-var source = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-if ( source ) {
-    // PhoneGap application
-    source_route = 'http://proyectosphp.codice.com/ferrepat_git/';
-} else {
-    // Web page
-    source_route = 'http://localhost:81/ferrepat_git/';
+pasarelas.paypal = {
+    environment : (!liberacion)?'PayPalEnvironmentSandbox':'PayPalEnvironmentProduction',
+    cartInfo : {},
+    initPaymentUI : function () {
+        var clientIDs = {
+            "PayPalEnvironmentProduction": "YOUR_PRODUCTION_CLIENT_ID",
+            "PayPalEnvironmentSandbox": "ATZdwWaBm5-YqagYeMblXosZ_zFVjsvPzkO8NH4h7A6n-2aGSF5bUrtzTOGjxmX24oozI9-gaD7pozk-"
+        };
+        PayPalMobile.init(clientIDs, pasarelas.paypal.onPayPalMobileInit);
+    },
+    onSuccesfulPayment : function(payment) {
+        console.log("payment success: " + JSON.stringify(payment, null, 4));
+        pasarelas.paypal.cartInfo = {};
+    },
+    // This code is only used for independent card.io scanning abilities
+    onCardIOComplete: function(card) {
+        console.log("Card Scanned success: " + JSON.stringify(card, null, 4));
+    },
+    onAuthorizationCallback : function(authorization) {
+        console.log("authorization: " + JSON.stringify(authorization, null, 4));
+    },
+    createPayment : function () {
+        // for simplicity use predefined amount
+        // optional payment details for more information check [helper js file](https://github.com/paypal/PayPal-Cordova-Plugin/blob/master/www/paypal-mobile-js-helper.js)
+        var paymentDetails = new PayPalPaymentDetails
+                                (
+                                    pasarelas.paypal.cartInfo.subtotal,
+                                    pasarelas.paypal.cartInfo.envio,
+                                    pasarelas.paypal.cartInfo.impuesto
+                                );
+        var payment = new PayPalPayment
+                            (
+                                pasarelas.paypal.cartInfo.cantidad,
+                                pasarelas.paypal.cartInfo.moneda,
+                                pasarelas.paypal.cartInfo.descripcion,
+                                "Sale",
+                                paymentDetails);
+        return payment;
+    },
+    simulPayment : function () {
+         // for simplicity use predefined amount
+         // optional payment details for more information check [helper js file](https://github.com/paypal/PayPal-Cordova-Plugin/blob/master/www/paypal-mobile-js-helper.js)
+         var paymentDetails = new PayPalPaymentDetails("50.00", "0.00", "0.00");
+         var payment = new PayPalPayment("50.00", "USD", "Descripcion simulada", "Sale", paymentDetails);
+         return payment;
+    },
+    configuration : function () {
+        // for more options see `paypal-mobile-js-helper.js`
+        var config = new PayPalConfiguration({
+            merchantName: "FERREPAT S.A. DE C.V.",
+            merchantPrivacyPolicyURL: "https://www.ferrepat.com/aviso_privacidad.html",
+            merchantUserAgreementURL: "https://www.ferrepat.com/terminos_condiciones.html"
+        });
+        return config;
+    },
+    onPrepareRender : function() {
+        console.log('onPrepareRenderer - No utilizado');
+    },
+    singlePayment : function(cart,simulate) {
+
+        pasarelas.paypal.cartInfo = cart;
+
+        if(simulate){
+            PayPalMobile.renderSinglePaymentUI
+            (
+                pasarelas.paypal.simulPayment(),
+                pasarelas.paypal.onSuccesfulPayment,
+                pasarelas.paypal.onUserCanceled
+            );
+        } 
+        else
+        {
+            PayPalMobile.renderSinglePaymentUI
+            (
+                pasarelas.paypal.createPayment(),
+                pasarelas.paypal.onSuccesfulPayment,
+                pasarelas.paypal.onUserCanceled
+            );
+        }
+
+    },
+    futrePayment : function() {
+        PayPalMobile.renderFuturePaymentUI
+        (
+            pasarelas.paypal.onAuthorizationCallback,
+            pasarelas.paypal.onUserCanceled
+        );
+    },
+    onPayPalMobileInit : function() {
+        // must be called
+        // use PayPalEnvironmentNoNetwork mode to get look and feel of the flow
+        PayPalMobile.prepareToRender
+        (
+            pasarelas.paypal.environment,
+            pasarelas.paypal.configuration(),
+            pasarelas.paypal.onPrepareRender
+        );
+
+    },
+    onUserCanceled : function(result) {
+        console.log(result);
+    }
 }
 
-intentos = 0,
-internetIntentos=0,
-linkIntentos=0;
-var app = {
+app = {
     version: 0,
     servicio : source_route+'webapp_service/index.php',
     urlsitio : source_route+'index.php?app=true',
@@ -131,6 +241,10 @@ var app = {
         }
     },
     onDeviceReady: function() {
+
+        //Inicializando pasarela
+        pasarelas.paypal.initPaymentUI();
+
         if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) )
             StatusBar.overlaysWebView(false);
         
@@ -353,6 +467,10 @@ var app = {
         {
             app.openExternal(msg.data.url);
         }
+        else if (msg.data.type == "paypal" )
+        {
+            app.paypal(msg.data.cart, msg.data.simular);
+        }
 
 
 
@@ -413,6 +531,11 @@ var app = {
     },
     openExternal:function(link){
         window.open(link, "_system");
+    },
+    paypal:function(cart,simular){
+
+        pasarelas.paypal.singlePayment(cart,false);
+
     }
 };
 /*JQUERY*/
