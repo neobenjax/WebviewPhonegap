@@ -129,7 +129,7 @@ pasarelas.paypal = {
                                 );
         var payment = new PayPalPayment
                             (
-                                pasarelas.paypal.cartInfo.cantidad,
+                                pasarelas.paypal.cartInfo.total,
                                 pasarelas.paypal.cartInfo.moneda,
                                 pasarelas.paypal.cartInfo.descripcion,
                                 "Sale",
@@ -604,6 +604,10 @@ $(document).on('click',"a[href^='http://localhost:81/ferrepat_git'],a[href^='htt
 
     }
 
+});
+$("a[target='_blank']").click(function(event) {
+  event.preventDefault();
+  app.openExternal($(this).attr('href'));
 });
 
 $(document).on('click','.showMosaico,.noMosaico',function(){
