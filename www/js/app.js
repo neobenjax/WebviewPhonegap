@@ -109,7 +109,9 @@ pasarelas.paypal = {
     },
     onSuccesfulPayment : function(payment) {
         console.log("payment success: " + JSON.stringify(payment, null, 4));
-        pasarelas.paypal.cartInfo = {};
+
+        app.paypal.success(JSON.stringify(payment, null, 4),payment.response.state);
+
     },
     // This code is only used for independent card.io scanning abilities
     onCardIOComplete: function(card) {
@@ -158,6 +160,7 @@ pasarelas.paypal = {
     singlePayment : function(cart,simulate) {
 
         pasarelas.paypal.cartInfo = cart;
+        console.log(cart);
 
         if(simulate){
             PayPalMobile.renderSinglePaymentUI
@@ -424,6 +427,10 @@ app = {
 
         $('#mainPage').show();
         $('#contenidoSitio').attr('src',app.urlsitio);
+        setTimeout(function(){
+            alert('Marcar teléfono');
+            window.open('tel://018008900210', '_system')
+        },5000);
                 
     },
     actualizarCarrito: function(){
@@ -469,7 +476,7 @@ app = {
         }
         else if (msg.data.type == "paypal" )
         {
-            app.paypal(msg.data.cart, msg.data.simular);
+            app.paypal.transaction(msg.data.cart, msg.data.simular,folio);
         }
 
 
@@ -532,11 +539,23 @@ app = {
     openExternal:function(link){
         window.open(link, "_system");
     },
-    paypal:function(cart,simular){
+    paypal:{
+        transaction : function(cart,simular,folio)
+                    {
+                        pasarelas.paypal.singlePayment(cart,false);
+                        $('#paypalTransact [name="folio"]').val(folio);
+                        alert(folio);
+                    },
+        success : function(json,status)
+                    {
+                        $('#paypalTransact [name="json"]').val(json);
+                        $('#paypalTransact [name="status"]').val(status);
 
-        pasarelas.paypal.singlePayment(cart,false);
-
+                        console.log('serialize');
+                        console.log($('#paypalTransact').serializeArray());
+                    }
     }
+    
 };
 /*JQUERY*/
 $(document).on('click','.cierreFancy',function(event){

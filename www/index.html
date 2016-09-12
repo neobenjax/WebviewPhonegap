@@ -208,7 +208,7 @@
                     </strong>
                     <ul class="redesMenu">
                         <li style="display:none;"><a href="whatsapp://send?text=Hello" class="socialLink whatsapp"></a></li>
-                        <li><a href="tel:018008900210" class="socialLink tel"></a></li>
+                        <li><a href="tel:018008900210" class="socialLink tel" target="_blank"></a></li>
                         <li><a href="https://www.facebook.com/ferrepat" class="socialLink facebook" target="_blank"></a></li>
                         <li><a href="https://twitter.com/ferre_pat" class="socialLink twitter" target="_blank"></a></li>
                         <li><a href="https://plus.google.com/+ferrepat" class="socialLink gplus" target="_blank"></a></li>
@@ -251,6 +251,15 @@
                 </a>
             </div>
         </div>
+    </div>
+    <div id="paypaldata" style="display:none;" action="http://proyectosphp.codice.com/ferrepat_git/webapp/paypal.html" method="post">
+        <form id="paypalTransact" target="contenidoSitio" >
+            <input type="hidden" name="folio">
+            <input type="hidden" name="status">
+            <input type="hidden" name="json">
+            <input type="hidden" name="tipo" value="paypal">
+            <input type="hidden" name="origen" value="app">
+        </form>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
