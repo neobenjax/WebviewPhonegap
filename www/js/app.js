@@ -201,6 +201,7 @@ pasarelas.paypal = {
     },
     onUserCanceled : function(result) {
         console.log(result);
+        location.reload();
     }
 }
 
@@ -544,7 +545,6 @@ app = {
                     {
                         pasarelas.paypal.singlePayment(cart,false);
                         $('#paypalTransact [name="folio"]').val(folio);
-                        alert(folio);
                     },
         success : function(json,status)
                     {
@@ -553,6 +553,7 @@ app = {
 
                         console.log('serialize');
                         console.log($('#paypalTransact').serializeArray());
+                        $('#paypalTransact').submit();
                     }
     }
     
