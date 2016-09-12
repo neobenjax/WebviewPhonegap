@@ -476,7 +476,7 @@ app = {
         }
         else if (msg.data.type == "paypal" )
         {
-            app.paypal.transaction(msg.data.cart, msg.data.simular,folio);
+            app.paypal.transaction(msg.data.cart, msg.data.simular,msg.data.folio);
         }
 
 
