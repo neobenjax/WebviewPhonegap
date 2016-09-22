@@ -428,10 +428,10 @@ app = {
 
         $('#mainPage').show();
         $('#contenidoSitio').attr('src',app.urlsitio);
-        setTimeout(function(){
+        /*setTimeout(function(){
             alert('Marcar teléfono');
             window.open('tel://018008900210', '_system')
-        },5000);
+        },5000);*/
                 
     },
     actualizarCarrito: function(){
@@ -478,6 +478,10 @@ app = {
         else if (msg.data.type == "paypal" )
         {
             app.paypal.transaction(msg.data.cart, msg.data.simular,msg.data.folio);
+        }
+        else if (msg.data.type == "alertaApp" )
+        {
+            app.alertaApp(msg.data.alerta,msg.data.timeout,msg.data.redirect)
         }
 
 
@@ -539,6 +543,13 @@ app = {
     },
     openExternal:function(link){
         window.open(link, "_system");
+    },
+    alertaApp:function(alerta,timeout,redirect){
+        if(redirect) alerta.close=function(){$('#contenidoSitio').attr('src',redirect);};
+
+        utiles.alerta(alerta);
+        
+        if(timeout) setTimeout(function(){$.fancybox.close();},timeout);
     },
     paypal:{
         transaction : function(cart,simular,folio)
