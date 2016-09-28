@@ -125,7 +125,8 @@
         <allow-intent href="itms-apps:*" />
         <allow-navigation href="*" />
         <access origin="geo:*" launch-external="yes" />
-		<preference name="StatusBarBackgroundColor" value="#216d93" />
+        <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="StatusBarBackgroundColor" value="#216d93" />
         <access origin="tel:*" launch-external="yes"/>
         <access origin="mailto:*" launch-external="yes"/>
     </platform>
