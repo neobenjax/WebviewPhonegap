@@ -127,6 +127,7 @@
         <access origin="geo:*" launch-external="yes" />
         <preference name="StatusBarOverlaysWebView" value="false" />
         <preference name="StatusBarBackgroundColor" value="#216d93" />
+        <!--IOS 10 View controller-based status bar appearance en info.plist-->
         <access origin="tel:*" launch-external="yes"/>
         <access origin="mailto:*" launch-external="yes"/>
     </platform>
