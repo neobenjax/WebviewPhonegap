@@ -40,6 +40,9 @@ if ( source ) {
     source_route = 'http://localhost:81/ferrepat_git/';
 }
 
+if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) )
+    ios = true;
+
 intentos = 0,
 internetIntentos=0,
 linkIntentos=0;
