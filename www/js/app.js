@@ -221,8 +221,9 @@ app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('deviceready', app.onDeviceReady(), false);
         document.addEventListener('online', app.checkConnection('online'), false);
+        document.addEventListener('deviceready', app.onDeviceReady(), false);
+
         //document.addEventListener("offline", app.checkConnection('offline'), false);
     },
     // deviceready Event Handler
@@ -288,8 +289,6 @@ app = {
     },
     onDeviceReady: function() {
 
-        //Inicializando pasarela
-        pasarelas.paypal.initPaymentUI();
 
         if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) )
             //StatusBar.overlaysWebView(false);
@@ -474,7 +473,14 @@ app = {
             alert('Marcar teléfono');
             window.open('tel://018008900210', '_system')
         },5000);*/
-                
+        //Fixed
+        try {
+            pasarelas.paypal.initPaymentUI();
+        }
+        catch(err) {
+            console.log('Error paypal');
+        }
+        
     },
     actualizarCarrito: function(){
         //Actualizar numero de productos en el carrito
