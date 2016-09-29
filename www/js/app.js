@@ -488,7 +488,7 @@ app = {
             pasarelas.paypal.initPaymentUI();
         }
         catch(err) {
-            alert(err.message);
+            console.log('Error paypal');
         }
                 
     },
@@ -572,7 +572,6 @@ app = {
         console.log(info);
         //Limitaciones
         //http://www.joshmorony.com/posting-to-a-facebook-wall-with-phonegap-the-javascript-sdk/
-        alert('info: '+JSON.stringify(info));
         window.plugins.socialsharing.share(
             info.mensaje, 
             null, 
