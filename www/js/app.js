@@ -39,7 +39,7 @@ if ( source ) {
     // Web page
     source_route = 'http://localhost:81/ferrepat_git/';
 }
-
+ios = false;
 if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) )
     ios = true;
 
@@ -478,7 +478,7 @@ app = {
             pasarelas.paypal.initPaymentUI();
         }
         catch(err) {
-            console.log('Error paypal');
+            console.log('Error paypal:'+err);
         }
         
     },
