@@ -105,7 +105,7 @@ pasarelas.paypal = {
     cartInfo : {},
     initPaymentUI : function () {
         var clientIDs = {
-            "PayPalEnvironmentProduction": "YOUR_PRODUCTION_CLIENT_ID",
+            "PayPalEnvironmentProduction": "AbywADC79fkbizQZtc5BItvNezhOHXE6A4kVr5eb2X6dp3e9fF_gg-VlLt5nH_dscLysMEQzZKoJgPbp",
             "PayPalEnvironmentSandbox": "ATZdwWaBm5-YqagYeMblXosZ_zFVjsvPzkO8NH4h7A6n-2aGSF5bUrtzTOGjxmX24oozI9-gaD7pozk-"
         };
         PayPalMobile.init(clientIDs, pasarelas.paypal.onPayPalMobileInit);
