@@ -29,8 +29,8 @@ LOG ERRORS:
 
  localStorage.setItem('login', JSON.stringify(login));
 */
-liberacion = false;
-
+liberacion = true;
+liberacionPasarelas = true;
 var source = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
 if ( source ) {
     // PhoneGap application
@@ -101,7 +101,7 @@ utiles = {
 };
 
 pasarelas.paypal = {
-    environment : (!liberacion)?'PayPalEnvironmentSandbox':'PayPalEnvironmentProduction',
+    environment : (!liberacionPasarelas)?'PayPalEnvironmentSandbox':'PayPalEnvironmentProduction',
     cartInfo : {},
     initPaymentUI : function () {
         var clientIDs = {
@@ -221,8 +221,14 @@ app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('online', app.checkConnection('online'), false);
-        document.addEventListener('deviceready', app.onDeviceReady(), false);
+        try {
+            document.addEventListener('deviceready', this.onDeviceReady, false);
+            document.addEventListener('online', app.checkConnection('online'), false);
+        }
+        catch(err) {
+            alert('Error:'+err);
+            alert('Stack:'+err.stack);
+        }
 
         //document.addEventListener("offline", app.checkConnection('offline'), false);
     },
@@ -242,7 +248,7 @@ app = {
             console.log('Caller:' + caller);
             
 
-            if(!ios){
+           /* if(!ios){
                 
                 var networkState = navigator.connection.type;
                 //var networkState = 'Connection.CELL';
@@ -260,7 +266,7 @@ app = {
                 
                 retorno = states[networkState];
 
-            } else {
+            } else {*/
                 
                 connectionState = {};
                 
@@ -281,7 +287,7 @@ app = {
              
                 retorno = connectionState;
                 
-            }
+            /*}*/
             
             //return states[networkState];
             return retorno;
@@ -289,9 +295,6 @@ app = {
     },
     onDeviceReady: function() {
 
-
-        if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) )
-            //StatusBar.overlaysWebView(false);
         
         var version = JSON.parse(localStorage.getItem('version'));
 
@@ -478,7 +481,7 @@ app = {
             pasarelas.paypal.initPaymentUI();
         }
         catch(err) {
-            console.log('Error paypal:'+err);
+            alert('Error paypal:'+err);
         }
         
     },
