@@ -522,6 +522,10 @@ app = {
         {
             app.overflowContent(msg.data.heightPage);
         }
+        else if (msg.data.type == "resetFixedHeight" )
+        {
+            app.resetFixedHeight();
+        }
         else if (msg.data.type == "openExternal" )
         {
             app.openExternal(msg.data.url);
@@ -591,6 +595,10 @@ app = {
         });
         console.log('Pollo: '+heightPage);
         console.log($('#contenidoSitio').height());
+    },
+    resetFixedHeight:function(){
+        $('#contenidoSitio').removeAttr('style');
+        console.log('Reset Height:'+$('#contenidoSitio').height());
     },
     openExternal:function(link){
         window.open(link, "_system");
