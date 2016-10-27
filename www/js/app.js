@@ -37,7 +37,8 @@ if ( source ) {
     source_route = (!liberacion)?'http://proyectosphp.codice.com/ferrepat_git/':'https://www.ferrepat.com/';
 } else {
     // Web page
-    source_route = 'http://localhost:81/ferrepat_git/';
+    //source_route = 'http://localhost:81/ferrepat_git/';
+    source_route = 'http://proyectosphp.codice.com/ferrepat_git/';
 }
 ios = false;
 if( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) )
@@ -294,6 +295,7 @@ app = {
         }
     },
     onDeviceReady: function() {
+
 
         
         var version = JSON.parse(localStorage.getItem('version'));
@@ -604,6 +606,7 @@ app = {
         window.open(link, "_system");
     },
     alertaApp:function(alerta,timeout,redirect){
+
         if(redirect) alerta.close=function(){$('#contenidoSitio').attr('src',redirect);};
 
         utiles.alerta(alerta);

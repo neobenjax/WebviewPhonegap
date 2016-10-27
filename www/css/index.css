@@ -324,16 +324,32 @@ input[type="checkbox"]:checked{
 
 div#contenido {
     width: 100vw!important;
-    height: calc(100vh - 120px)!important;
+    /*height: calc(100vh - 120px)!important;*/
     z-index: 1;
-    overflow:scroll !important;-webkit-overflow-scrolling:touch !important;
+    overflow:scroll !important;
+    -webkit-overflow-scrolling:touch !important;
+    height: 100%!important;
+    min-height: 400px;
+    -webkit-flex: 1; /* Safari 6.1+ */
+    flex: 1;
 }
 
 div#header {
     height: 55px;
+    overflow: hidden;
+}
+
+div#mainPage {
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-flex-direction: column; /* Safari 6.1+ */
+    flex-direction: column;
+    height: 100vh;
 }
 div#footerMenu {
-    height: 65px;
+    height: 75px;
     width: 100%;
     overflow: hidden;
     background:#fff;
@@ -644,8 +660,14 @@ div.menuApp.open{
     position: relative;
     margin-left: 40%;
     min-height: 100%;
-    height: auto;
+    height: 100vh;
     z-index: 2;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
 }
 
 div.overlay {
@@ -691,7 +713,13 @@ input.inputBuscadorMenu {
 }
 
 form.buscadorMenu {
-    padding: 15.5px 25px;
+    padding: 15.5px 25px 40px;
+    height: 56px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
 }
 
 .contenidoMenu ul.opcionesMenu {
@@ -764,6 +792,10 @@ form.buscadorMenu {
 .contenidoMenu {
     height: calc(100vh - 55px);
     overflow: auto;
+    height: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
 }
 .contactanosRedes{
     display:block;
@@ -788,7 +820,7 @@ ul.redesMenu > li {
 
 ul.redesMenu > li > a {
     display: block;
-    width: 25px;
+    width: 26px;
     height: 25px;
     background-image: url(../img/redes_iconos_sprite.png);
     background-repeat: no-repeat;
@@ -818,6 +850,7 @@ div#mainContainer {
     width:100%;
     overflow:hidden;
     width:100vw;
+    height: 100vh;
 }
 a.abrirMosaico{
     display:none;
@@ -835,14 +868,16 @@ a.abrirMosaico > img{
     top: 55px;
     left: 0;
     width: 100%;
-    height: calc(100vh - 105px);
+    /* height: calc(100vh - 105px); */
     overflow: hidden;
     z-index: 999;
     -webkit-transform: translateX(-100%);
     -moz-transform: translateX(-100%);
     -o-transform: translateX(-100%);
     transform: translateX(-100%);
-    background:#fff;
+    background: #fff;
+    /* height: 100%; */
+    bottom: 55px;
 }
 #menuArticulos.open{
     -webkit-transform: translateX(0%);
@@ -874,4 +909,11 @@ h1.oopsNoInternet{
 
 p.texto404{
     font-size: 16px;
+}
+
+@media only screen and (max-width : 320px) {
+    ul.menu{width:100%;}
+    .menuCont{margin-left: 30%;}
+    #menuArticulos{top: 45px;}
+    .toolsHeader {padding: 5px 25px 0;}
 }
