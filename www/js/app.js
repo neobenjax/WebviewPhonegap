@@ -296,6 +296,10 @@ app = {
     },
     onDeviceReady: function() {
 
+        if(!ios){
+            //$('body').append('<link rel="stylesheet" href="css/calc_fallback.css"\/>');
+        }
+
 
         
         var version = JSON.parse(localStorage.getItem('version'));
@@ -601,6 +605,7 @@ app = {
     resetFixedHeight:function(){
         $('#contenidoSitio').removeAttr('style');
         console.log('Reset Height:'+$('#contenidoSitio').height());
+        //$('#contenidoSitio').attr('src',$('#contenidoSitio').attr('src')+'#')
     },
     openExternal:function(link){
         window.open(link, "_system");
